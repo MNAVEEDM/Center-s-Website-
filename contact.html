@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact | Center for Cognitive Intelligence and AI Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: { 950: '#050914', 900: '#0a1230', 850: '#0c1638', 800: '#0f1d45', 700: '#142553' },
+          brand: { orange: '#f5820e', gold: '#fbbf24', blue: '#38bdf8' }
+        },
+        fontFamily: {
+          serif: ['"Zalando Sans"', 'sans-serif'],
+          sans: ['"Zalando Sans"', 'sans-serif']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Zalando Sans', sans-serif; background-color: #050914; }
+
+  .bg-glow {
+    background:
+      radial-gradient(ellipse 900px 700px at 5% 15%, rgba(245,130,14,0.35), transparent 60%),
+      radial-gradient(ellipse 1000px 800px at 100% 0%, rgba(56,189,248,0.12), transparent 55%),
+      radial-gradient(circle at 50% 100%, rgba(56,189,248,0.15), transparent 45%),
+      linear-gradient(180deg, #050914 0%, #0a1230 45%, #0a1230 100%);
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(rgba(148,180,255,0.18) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  .card {
+    background: linear-gradient(180deg, rgba(20,37,83,0.55), rgba(10,18,48,0.55));
+    border: 1px solid rgba(56,189,248,0.25);
+  }
+
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px;
+    background: #f5820e; transition: width .25s ease;
+  }
+  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #050914; }
+  ::-webkit-scrollbar-thumb { background: #f5820e; border-radius: 8px; }
+
+  @keyframes logoSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .logo-spin { animation: logoSpin 16s linear infinite; }
+  .logo-wrap:hover .logo-spin { animation-play-state: paused; }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-d2 { transition-delay: .16s; }
+
+  .btn-pop { transition: transform .25s ease, box-shadow .25s ease; }
+  .btn-pop:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 28px rgba(245,130,14,0.35); }
+</style>
+</head>
+<body class="text-slate-200 antialiased">
+
+<!-- ============ NAVBAR ============ -->
+<header class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-24 flex items-center justify-between">
+    <a href="center.html" class="flex items-center gap-3 shrink-0">
+      <div class="logo-wrap relative w-12 h-12 shrink-0">
+        <img src="logo.png" alt="CIAS Logo" class="w-12 h-12 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="w-12 h-12 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+      </div>
+      <div class="flex flex-col justify-center gap-2 py-2">
+        <p class="font-serif text-lg sm:text-xl text-white font-semibold leading-none tracking-tight">Center for <span class="text-brand-orange">Cognitive Intelligence<br class="hidden sm:block" /> and AI Systems</span></p>
+        <div class="leading-[1.4] space-y-0.5">
+          <p class="text-xs tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
+          <p class="text-xs text-slate-300">Prince Mohammad Bin Fahd University</p>
+        </div>
+      </div>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-200">
+      <a href="center.html#home" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <div class="relative group">
+        <button class="nav-link flex items-center gap-1">Research
+          <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="absolute left-0 top-full mt-3 w-48 rounded-lg card shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+          <a href="about.html" class="block px-4 py-2 text-sm hover:text-brand-orange">Research Tracks</a>
+          <a href="center.html#research" class="block px-4 py-2 text-sm hover:text-brand-orange">Focus Areas</a>
+          <a href="people.html" class="block px-4 py-2 text-sm hover:text-brand-orange">Track Leaders</a>
+        </div>
+      </div>
+      <a href="people.html" class="nav-link">People</a>
+      <a href="news.html" class="nav-link">News &amp; Events</a>
+      <a href="center.html#collaborations" class="nav-link">Collaborations</a>
+      <a href="contact.html" class="nav-link active">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <button class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+      </button>
+      <button id="menuBtn" class="lg:hidden text-white">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="hidden lg:hidden bg-navy-900 border-t border-white/5 px-5 py-4 space-y-3 text-sm">
+    <a href="center.html#home" class="block py-1">Home</a>
+    <a href="about.html" class="block py-1">About</a>
+    <a href="center.html#research" class="block py-1">Research</a>
+    <a href="people.html" class="block py-1">People</a>
+    <a href="news.html" class="block py-1">News &amp; Events</a>
+    <a href="center.html#collaborations" class="block py-1">Collaborations</a>
+    <a href="contact.html" class="block py-1 text-brand-orange">Contact</a>
+  </div>
+</header>
+
+<!-- ============ CONTACT ============ -->
+<section class="relative bg-glow dot-grid pt-40 pb-24 px-5 lg:px-8 overflow-hidden">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 relative z-10">
+    <div class="reveal in-view">
+      <p class="text-brand-orange font-semibold tracking-wide text-sm mb-2">GET IN TOUCH</p>
+      <h1 class="font-serif text-3xl sm:text-4xl text-white font-bold mb-6">Contact Us</h1>
+      <p class="text-slate-300 leading-relaxed mb-8">Have a question or want to collaborate with us? Send a message and our team will get back to you.</p>
+      <div class="space-y-5">
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-full border border-brand-blue/50 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-6-7-11a7 7 0 1114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          </div>
+          <p class="text-slate-300 text-sm">Prince Mohammad Bin Fahd University, Al Khobar, Saudi Arabia</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-full border border-brand-blue/50 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h4l2 5-2.5 1.5a11 11 0 005 5L13 14l5 2v4a2 2 0 01-2 2C8.6 22 2 15.4 2 7a2 2 0 012-2z"/></svg>
+          </div>
+          <p class="text-slate-300 text-sm">+966 13 000 0000</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-full border border-brand-blue/50 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M3 7l9 6 9-6"/></svg>
+          </div>
+          <p class="text-slate-300 text-sm">cias@pmu.edu.sa</p>
+        </div>
+      </div>
+    </div>
+
+    <form class="card rounded-2xl p-8 space-y-5 reveal in-view reveal-d2" onsubmit="event.preventDefault(); alert('Thank you! This is a demo form.');">
+      <div class="grid sm:grid-cols-2 gap-5">
+        <input type="text" placeholder="Full Name" class="w-full bg-navy-950/60 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" required />
+        <input type="email" placeholder="Email Address" class="w-full bg-navy-950/60 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" required />
+      </div>
+      <input type="text" placeholder="Subject" class="w-full bg-navy-950/60 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
+      <textarea rows="5" placeholder="Your Message" class="w-full bg-navy-950/60 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition"></textarea>
+      <button type="submit" class="btn-pop w-full py-3 rounded-lg bg-brand-orange text-navy-950 font-semibold hover:bg-orange-400 transition">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-white/5 bg-navy-950 px-5 lg:px-8 py-12">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <div class="logo-wrap relative w-10 h-10 shrink-0">
+        <img src="logo.png" alt="CIAS Logo" class="logo-spin w-10 h-10 rounded-full object-cover" onerror="this.style.display='none'" />
+      </div>
+      <p class="font-serif text-white font-semibold">Center for Cognitive Intelligence and AI Systems</p>
+    </div>
+    <div class="flex gap-5 text-slate-400">
+      <a href="#" class="hover:text-brand-orange transition" aria-label="LinkedIn">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M7 10v7M7 7v.01M11 17v-4.5c0-1.5 1-2.5 2.5-2.5S16 11 16 12.5V17M11 12.5V17"/></svg>
+      </a>
+      <a href="#" class="hover:text-brand-orange transition" aria-label="Twitter/X">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l16 16M20 4L4 20"/></svg>
+      </a>
+      <a href="#" class="hover:text-brand-orange transition" aria-label="Facebook">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 3h-2a4 4 0 00-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      </a>
+    </div>
+    <p class="text-slate-500 text-xs">&copy; 2026 Center for Cognitive Intelligence and AI Systems. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in-view'); revealIO.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealIO.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>People | Center for Cognitive Intelligence and AI Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: { 950: '#050914', 900: '#0a1230', 850: '#0c1638', 800: '#0f1d45', 700: '#142553' },
+          brand: { orange: '#f5820e', gold: '#fbbf24', blue: '#38bdf8' }
+        },
+        fontFamily: {
+          serif: ['"Zalando Sans"', 'sans-serif'],
+          sans: ['"Zalando Sans"', 'sans-serif']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Zalando Sans', sans-serif; background-color: #050914; }
+
+  .bg-glow {
+    background:
+      radial-gradient(ellipse 900px 700px at 5% 15%, rgba(245,130,14,0.35), transparent 60%),
+      radial-gradient(ellipse 1000px 800px at 100% 0%, rgba(56,189,248,0.12), transparent 55%),
+      radial-gradient(circle at 50% 100%, rgba(56,189,248,0.15), transparent 45%),
+      linear-gradient(180deg, #050914 0%, #0a1230 45%, #0a1230 100%);
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(rgba(148,180,255,0.18) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  .card {
+    background: linear-gradient(180deg, rgba(20,37,83,0.55), rgba(10,18,48,0.55));
+    border: 1px solid rgba(56,189,248,0.25);
+  }
+
+  .avatar { background: linear-gradient(135deg, #f5820e, #38bdf8); }
+
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px;
+    background: #f5820e; transition: width .25s ease;
+  }
+  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #050914; }
+  ::-webkit-scrollbar-thumb { background: #f5820e; border-radius: 8px; }
+
+  /* ---- Globe graphic ---- */
+  .globe {
+    width: 260px; height: 260px; border-radius: 9999px;
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 38% 32%, rgba(251,191,36,0.9), rgba(245,130,14,0.55) 30%, rgba(15,29,69,0.9) 62%, #0a1230 85%);
+    box-shadow: 0 0 90px rgba(245,130,14,0.45), inset 0 0 60px rgba(0,0,0,0.5);
+    border: 2px solid rgba(245,130,14,0.35);
+  }
+  .globe::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: 9999px;
+    background-image: radial-gradient(rgba(253,186,116,0.55) 1px, transparent 1.4px);
+    background-size: 16px 16px;
+    mix-blend-mode: screen;
+    opacity: .5;
+  }
+  .globe-ring {
+    position: absolute; border-radius: 9999px; border: 1px solid rgba(56,189,248,0.35);
+  }
+
+  /* ---- Number badges ---- */
+  .track-num {
+    width: 44px; height: 44px; transform: rotate(45deg);
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,18,48,0.8); flex-shrink: 0;
+  }
+  .track-num span { transform: rotate(-45deg); font-size: .8rem; }
+  .track-num.orange { border: 2px solid #f5820e; box-shadow: 0 0 14px rgba(245,130,14,0.45); }
+  .track-num.orange span { color: #f5820e; }
+  .track-num.blue { border: 2px solid #38bdf8; box-shadow: 0 0 14px rgba(56,189,248,0.45); }
+  .track-num.blue span { color: #38bdf8; }
+
+  /* ---- People pill tabs ---- */
+  .people-tabs-wrap {
+    background: rgba(10,18,48,0.65); border: 1px solid rgba(56,189,248,0.25);
+    border-radius: 9999px; padding: 6px; display: inline-flex; gap: 4px; flex-wrap: wrap; justify-content: center;
+  }
+  .people-tab {
+    padding: .65rem 1.3rem; border-radius: 9999px; font-size: .82rem; font-weight: 600;
+    color: #cbd5e1; transition: background .3s ease, color .3s ease, box-shadow .3s ease; white-space: nowrap;
+  }
+  .people-tab.active { background: #f5820e; color: #050914; box-shadow: 0 8px 20px rgba(245,130,14,0.35); }
+  .people-tab:not(.active):hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .people-panel { display: none; }
+  .people-panel.active { display: block; animation: fadeInUp .5s ease both; }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ---- Quote marks ---- */
+  .quote-mark { font-family: 'Zalando Sans', sans-serif; line-height: 1; }
+
+  /* ============ Shared attraction animations ============ */
+  @keyframes logoSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .logo-spin { animation: logoSpin 16s linear infinite; }
+  .logo-wrap:hover .logo-spin { animation-play-state: paused; }
+
+  @keyframes ringSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes ringSpinRev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+  .ring-spin-slow { animation: ringSpin 40s linear infinite; }
+  .ring-spin-slow-rev { animation: ringSpinRev 55s linear infinite; }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: .06s; } .reveal-d2 { transition-delay: .12s; }
+  .reveal-d3 { transition-delay: .18s; } .reveal-d4 { transition-delay: .24s; }
+  .reveal-d5 { transition-delay: .3s; }
+
+  .card-hover { transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .4s ease; }
+  .card-hover:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 28px 55px rgba(0,0,0,0.5), 0 0 40px rgba(245,130,14,0.3); border-color: rgba(245,130,14,0.8); }
+  .card-hover.reveal { transition: opacity .6s ease, transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .4s ease; }
+</style>
+</head>
+<body class="text-slate-200 antialiased">
+
+<!-- ============ NAVBAR ============ -->
+<header class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
+    <a href="center.html" class="flex items-center gap-3 shrink-0">
+      <div class="logo-wrap relative w-12 h-12 shrink-0">
+        <img src="logo.png" alt="CIAS Logo" class="logo-spin w-12 h-12 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="logo-spin w-12 h-12 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+      </div>
+      <div class="leading-tight">
+        <p class="font-serif text-base sm:text-lg text-white font-semibold -mb-0.5">Center for <span class="text-brand-orange">Cognitive Intelligence<br class="hidden sm:block" /> and AI Systems</span></p>
+        <p class="text-[11px] tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
+        <p class="text-[11px] text-slate-300">Prince Mohammad Bin Fahd University</p>
+      </div>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-200">
+      <a href="center.html#home" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <div class="relative group">
+        <button class="nav-link flex items-center gap-1">Research
+          <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="absolute left-0 top-full mt-3 w-48 rounded-lg card shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+          <a href="center.html#research" class="block px-4 py-2 text-sm hover:text-brand-orange">Research Areas</a>
+          <a href="center.html#research" class="block px-4 py-2 text-sm hover:text-brand-orange">Projects</a>
+          <a href="center.html#research" class="block px-4 py-2 text-sm hover:text-brand-orange">Publications</a>
+        </div>
+      </div>
+      <a href="people.html" class="nav-link active">People</a>
+      <a href="news.html" class="nav-link">News &amp; Events</a>
+      <a href="center.html#collaborations" class="nav-link">Collaborations</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <button class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+      </button>
+      <button id="menuBtn" class="lg:hidden text-white">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="hidden lg:hidden bg-navy-900 border-t border-white/5 px-5 py-4 space-y-3 text-sm">
+    <a href="center.html#home" class="block py-1">Home</a>
+    <a href="about.html" class="block py-1">About</a>
+    <a href="center.html#research" class="block py-1">Research</a>
+    <a href="people.html" class="block py-1 text-brand-orange">People</a>
+    <a href="news.html" class="block py-1">News &amp; Events</a>
+    <a href="center.html#collaborations" class="block py-1">Collaborations</a>
+    <a href="contact.html" class="block py-1">Contact</a>
+  </div>
+</header>
+
+<!-- ============ PEOPLE HERO ============ -->
+<section class="relative bg-glow dot-grid pt-40 pb-14 overflow-hidden" style="background-image: linear-gradient(180deg, rgba(5,9,20,0.75) 0%, rgba(10,18,48,0.85) 60%, #0a1230 100%), url('images/people-bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-2 gap-14 items-center relative z-10">
+    <div class="reveal in-view">
+      <h1 class="font-serif font-extrabold text-4xl sm:text-5xl text-white">Our <span class="text-brand-orange">People</span></h1>
+      <div class="w-20 h-1 bg-brand-orange rounded-full my-6"></div>
+      <p class="text-slate-300 text-lg leading-relaxed max-w-xl">
+        Meet the leadership, researchers, and collaborators driving CIAS's mission across
+        five interconnected research tracks.
+      </p>
+    </div>
+
+    <div class="relative flex items-center justify-center h-[300px] reveal in-view reveal-d2">
+      <div class="globe-ring w-[300px] h-[300px] ring-spin-slow"></div>
+      <div class="globe-ring w-[340px] h-[340px] opacity-60 ring-spin-slow-rev"></div>
+      <img src="logo.png" alt="CIAS Logo" class="logo-spin w-[260px] h-[260px] rounded-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div class="globe" style="display:none;"></div>
+      <div class="absolute -bottom-2 w-64 h-10 rounded-full bg-brand-orange/50 blur-3xl"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PEOPLE TAB PANELS ============ -->
+<section class="px-5 lg:px-8 pb-24 pt-10">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Pill tab nav -->
+    <div class="flex justify-center mb-10 reveal in-view">
+      <div class="people-tabs-wrap">
+        <button class="people-tab active" data-people-tab="leaders">Track Leaders</button>
+        <button class="people-tab" data-people-tab="senior">Senior Affiliates</button>
+        <button class="people-tab" data-people-tab="junior">Junior Affiliates</button>
+        <button class="people-tab" data-people-tab="external">External Affiliates</button>
+      </div>
+    </div>
+
+    <!-- ===== Track Leaders (VP, Dean, Center Lead) ===== -->
+    <div class="people-panel active" id="people-leaders">
+      <div class="space-y-6">
+
+        <!-- Dean -->
+        <div class="card card-hover rounded-2xl p-6 sm:p-7 reveal reveal-d2">
+          <div class="grid sm:grid-cols-[auto,1fr] gap-6 items-start">
+            <div class="w-20 h-20 rounded-full overflow-hidden ring-4 ring-brand-blue/60 shrink-0 mx-auto sm:mx-0">
+              <img src="images/dean-ashraf.png" alt="Dr. Muhammad Waqar Ashraf" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-xl" style="display:none;">MW</div>
+            </div>
+            <div>
+              <h3 class="font-serif text-lg sm:text-xl text-brand-orange font-semibold">Dr. Muhammad Waqar Ashraf</h3>
+              <p class="text-white text-sm font-medium mt-1 mb-3">Dean, College of Sciences &amp; Human Studies</p>
+              <div class="relative pl-6">
+                <span class="quote-mark absolute left-0 -top-1 text-3xl text-brand-blue">&ldquo;</span>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                  We strive to foster interdisciplinary research that bridges science, technology, and the human
+                  dimension. By integrating AI and cognitive sciences, we aim to generate solutions that address
+                  real-world challenges and uplift communities.
+                  <span class="quote-mark text-2xl text-brand-blue">&rdquo;</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Lead -->
+        <div class="card card-hover rounded-2xl p-6 sm:p-7 reveal reveal-d3">
+          <div class="grid sm:grid-cols-[auto,1fr] gap-6 items-start">
+            <div class="w-20 h-20 rounded-full overflow-hidden ring-4 ring-brand-orange/60 shrink-0 mx-auto sm:mx-0">
+              <img src="images/lead-waked.jpg" alt="Dr. Arifi Noman Mohammed Waked" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-xl" style="display:none;">AW</div>
+            </div>
+            <div>
+              <h3 class="font-serif text-lg sm:text-xl text-brand-orange font-semibold">Dr. Arifi Noman Mohammed Waked</h3>
+              <p class="text-white text-sm font-medium mt-1 mb-3">Research Center Lead</p>
+              <div class="relative pl-6">
+                <span class="quote-mark absolute left-0 -top-1 text-3xl text-brand-orange">&ldquo;</span>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                  At CIAS, we champion inclusive, ethical, and human-centered innovation. Our goal is to advance
+                  cognitive intelligence and AI research that enhances human potential and drives sustainable,
+                  positive change across society.
+                  <span class="quote-mark text-2xl text-brand-orange">&rdquo;</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== Senior Affiliates / Track Leaders (Research Track Leads) ===== -->
+    <div class="people-panel" id="people-senior">
+      <div class="text-center mb-10">
+        <p class="text-brand-orange font-semibold tracking-wide text-sm mb-2">RESEARCH TRACK LEADS</p>
+        <h2 class="font-serif text-2xl sm:text-3xl text-white font-bold">Track Leaders</h2>
+        <p class="text-slate-400 text-sm max-w-2xl mx-auto mt-3">Our track leaders drive interdisciplinary research and innovation across key thematic areas, advancing knowledge with purpose.</p>
+      </div>
+
+      <div class="space-y-5">
+
+        <!-- 01 -->
+        <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d1">
+          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
+            <div class="track-num orange mx-auto lg:mx-0"><span class="font-serif font-extrabold">01</span></div>
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-orange/60 shrink-0">
+                <img src="images/leader-1.jpg" alt="Dr. Arifi Noman Mohammed Waked" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-sm" style="display:none;">AW</div>
+              </div>
+              <div>
+                <h3 class="font-serif text-base text-brand-orange font-semibold leading-tight">Dr. Arifi Noman Mohammed Waked</h3>
+                <p class="text-white text-xs font-medium mt-0.5">Research Center Lead</p>
+                <div class="flex items-start gap-1.5 mt-2">
+                  <svg class="w-4 h-4 text-brand-orange mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/><path stroke-linecap="round" d="M9 19h4M10 21h2"/></svg>
+                  <p class="text-brand-orange text-xs font-semibold leading-snug">Lead Researcher: Cognitive Intelligence and Inclusive Learning</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed lg:pl-5 lg:border-l lg:border-white/10">
+              Dr. Arifi Noman Mohammed Waked is an Assistant Professor in the Department of Sciences and Human
+              Studies at Prince Mohammad Bin Fahd University. She holds a PhD in Hearing and Speech Sciences with
+              specialization in Psycholinguistics from the University of Maryland. With over 20 years of experience
+              in higher education, she has served as educator, mentor, and academic advisor. Her research focuses on
+              AI in education, cognitive psychology, psycholinguistics, bilingualism, and language acquisition, with
+              special emphasis on EFL learners and individuals with cognitive or perceptual differences.
+            </p>
+          </div>
+        </div>
+
+        <!-- 02 -->
+        <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d2">
+          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
+            <div class="track-num blue mx-auto lg:mx-0"><span class="font-serif font-extrabold">02</span></div>
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-blue/60 shrink-0">
+                <img src="images/leader-2.jpg" alt="Dr. Jose P. Cerin" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-sm" style="display:none;">JC</div>
+              </div>
+              <div>
+                <h3 class="font-serif text-base text-brand-orange font-semibold leading-tight">Dr. Jose P. Cerin</h3>
+                <p class="text-white text-xs font-medium mt-0.5">Lead Researcher</p>
+                <div class="flex items-start gap-1.5 mt-2">
+                  <svg class="w-4 h-4 text-brand-orange mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5.5A1.5 1.5 0 015.5 4H11v16H5.5A1.5 1.5 0 014 18.5v-13zM20 5.5A1.5 1.5 0 0018.5 4H13v16h5.5a1.5 1.5 0 001.5-1.5v-13z"/></svg>
+                  <p class="text-brand-orange text-xs font-semibold leading-snug">Lead Researcher: AI Integration in Education and Healthcare</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed lg:pl-5 lg:border-l lg:border-white/10">
+              Dr. Jose P. Cerin is a Full Professor at Prince Mohammad Bin Fahd University with a PhD in Philosophy
+              from Spain and postdoctoral fellowships at Cambridge and Oxford Universities. His expertise spans
+              computational social sciences, philosophy of science, and human&ndash;AI systems. His research focuses
+              on AI integration in education and healthcare, ethical governance, leadership, and human&ndash;AI
+              collaboration. He has authored 19 books and over 100 publications, including more than 50
+              peer-reviewed articles, and is widely recognized for contributions to methodology, innovation, and
+              interdisciplinary research.
+            </p>
+          </div>
+        </div>
+
+        <!-- 03 -->
+        <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d3">
+          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
+            <div class="track-num orange mx-auto lg:mx-0"><span class="font-serif font-extrabold">03</span></div>
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-orange/60 shrink-0">
+                <img src="images/leader-3.jpg" alt="Dr. Alia Amir" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-sm" style="display:none;">AA</div>
+              </div>
+              <div>
+                <h3 class="font-serif text-base text-brand-orange font-semibold leading-tight">Dr. Alia Amir</h3>
+                <p class="text-white text-xs font-medium mt-0.5">Lead Researcher</p>
+                <div class="flex items-start gap-1.5 mt-2">
+                  <svg class="w-4 h-4 text-brand-orange mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="8" cy="8" r="2.6"/><circle cx="16" cy="8" r="2.6"/><circle cx="12" cy="8" r="2.6"/><path stroke-linecap="round" d="M3 19c.4-2.8 2.3-4.5 5-4.5M21 19c-.4-2.8-2.3-4.5-5-4.5M9 19c.3-2.4 1.6-4 3-4s2.7 1.6 3 4"/></svg>
+                  <p class="text-brand-orange text-xs font-semibold leading-snug">Lead Researcher: Social Dynamics and Elicitive Learning</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed lg:pl-5 lg:border-l lg:border-white/10">
+              Dr. Alia Amir is an Associate Professor in Language, Culture, and Communication and Research
+              Coordinator for Social Dynamics and Elicitive Learning at Prince Mohammad Bin Fahd University. Her
+              interdisciplinary research explores linguistics, social interaction, and educational communication
+              within AI-mediated environments. She focuses on how language, culture, and cognition shape human
+              interaction and learning processes. Her work examines how humans and intelligent systems jointly
+              construct meaning, with particular attention to ethics, identity, and the evolving role of AI in
+              socially embedded educational contexts.
+            </p>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d4">
+          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
+            <div class="track-num blue mx-auto lg:mx-0"><span class="font-serif font-extrabold">04</span></div>
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-blue/60 shrink-0">
+                <img src="images/leader-4.jpg" alt="Dr. Najma Saleem" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-sm" style="display:none;">NS</div>
+              </div>
+              <div>
+                <h3 class="font-serif text-base text-brand-orange font-semibold leading-tight">Dr. Najma Saleem</h3>
+                <p class="text-white text-xs font-medium mt-0.5">Lead Researcher</p>
+                <div class="flex items-start gap-1.5 mt-2">
+                  <svg class="w-4 h-4 text-brand-orange mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M3 9h18M7.5 9v11M7.5 12.5h3M7.5 16h3M12.5 12.5h3M12.5 16h3"/></svg>
+                  <p class="text-brand-orange text-xs font-semibold leading-snug">Lead Researcher: Mathematical Foundations and Scientific Inquiry in Education</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed lg:pl-5 lg:border-l lg:border-white/10">
+              Dr. Najma Saleem is an Associate Professor of Mathematics and Research Coordinator for Mathematical
+              Foundations and Scientific Inquiry in Education at Prince Mohammad Bin Fahd University. Her expertise
+              lies in applied mathematics, computational modeling, fluid dynamics, nanofluids, and physiological
+              flow systems. She has extensive experience in interdisciplinary research, particularly in
+              thermo-biofluid dynamics, electroosmotic transport, and energy-efficient system design. Her work
+              integrates sustainable engineering principles and advanced mathematical modeling. She has published
+              widely in international journals and has received multiple research productivity and academic
+              excellence awards.
+            </p>
+          </div>
+        </div>
+
+        <!-- 05 -->
+        <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d5">
+          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
+            <div class="track-num orange mx-auto lg:mx-0"><span class="font-serif font-extrabold">05</span></div>
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-orange/60 shrink-0">
+                <img src="images/leader-5.jpg" alt="Dr. Edyta Wolny-Ibrahim" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-sm" style="display:none;">EW</div>
+              </div>
+              <div>
+                <h3 class="font-serif text-base text-brand-orange font-semibold leading-tight">Dr. Edyta Wolny-Ibrahim</h3>
+                <p class="text-white text-xs font-medium mt-0.5">Lead Researcher</p>
+                <div class="flex items-start gap-1.5 mt-2">
+                  <svg class="w-4 h-4 text-brand-orange mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
+                  <p class="text-brand-orange text-xs font-semibold leading-snug">Lead Researcher: Transdisciplinary and Humanities Studies</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed lg:pl-5 lg:border-l lg:border-white/10">
+              Dr. Edyta Wolny-Ibrahim is an Assistant Professor in the Department of Sciences and Human Studies at
+              Prince Mohammad Bin Fahd University. She holds a PhD in Humanities (Literary Studies) from the
+              University of Warsaw, with research focusing on Egypt, Islamic education, and cultural identity. Her
+              interests include Arab culture, globalization, Saudi Vision 2030, and contemporary social change in
+              the Arab world. She teaches Modern Standard Arabic and Egyptian dialect and has received recognition
+              for promoting Arabic language and culture internationally.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== Junior Affiliates ===== -->
+    <div class="people-panel" id="people-junior">
+      <div class="card rounded-2xl p-10 text-center text-slate-400 reveal">
+        Junior Affiliates content coming soon.
+      </div>
+    </div>
+
+    <!-- ===== External Affiliates ===== -->
+    <div class="people-panel" id="people-external">
+      <div class="card rounded-2xl p-10 text-center text-slate-400 reveal">
+        External Affiliates content coming soon.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-white/5 bg-navy-950 px-5 lg:px-8 py-12">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <div class="logo-wrap relative w-10 h-10 shrink-0">
+        <img src="logo.png" alt="CIAS Logo" class="logo-spin w-10 h-10 rounded-full object-cover" onerror="this.style.display='none'" />
+      </div>
+      <p class="font-serif text-white font-semibold">Center for Cognitive Intelligence and AI Systems</p>
+    </div>
+    <div class="flex gap-5 text-slate-400">
+      <a href="#" class="hover:text-brand-orange transition" aria-label="LinkedIn">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M7 10v7M7 7v.01M11 17v-4.5c0-1.5 1-2.5 2.5-2.5S16 11 16 12.5V17M11 12.5V17"/></svg>
+      </a>
+      <a href="#" class="hover:text-brand-orange transition" aria-label="Twitter/X">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l16 16M20 4L4 20"/></svg>
+      </a>
+      <a href="#" class="hover:text-brand-orange transition" aria-label="Facebook">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 3h-2a4 4 0 00-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      </a>
+    </div>
+    <p class="text-slate-500 text-xs">&copy; 2026 Center for Cognitive Intelligence and AI Systems. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  const peopleTabs = document.querySelectorAll('.people-tab');
+  const peoplePanels = document.querySelectorAll('.people-panel');
+  peopleTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      peopleTabs.forEach(t => t.classList.remove('active'));
+      peoplePanels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const panel = document.getElementById('people-' + tab.dataset.peopleTab);
+      panel.classList.add('active');
+      panel.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+    });
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in-view'); revealIO.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealIO.observe(el));
+</script>
+</body>
+</html>
