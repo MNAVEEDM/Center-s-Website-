@@ -25,7 +25,7 @@
 </script>
 <style>
   html { scroll-behavior: smooth; }
-  body { font-family: 'Zalando Sans', sans-serif; background-color: #050914; }
+  body { font-family: 'Zalando Sans', sans-serif; background-color: transparent; }
 
   .bg-glow {
     background:
@@ -35,17 +35,76 @@
       linear-gradient(180deg, #050914 0%, #0a1230 45%, #0a1230 100%);
   }
 
+  /* Fixed colorful aurora sitting behind the ENTIRE page so every
+     glass card has something bright/detailed to blur — without this,
+     backdrop-filter just blurs flat navy and the glass reads as a
+     plain dark box. */
+  .app-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 750px 600px at 8% 8%, rgba(245,130,14,0.42), transparent 62%),
+      radial-gradient(ellipse 850px 700px at 95% 12%, rgba(56,189,248,0.32), transparent 58%),
+      radial-gradient(ellipse 700px 600px at 12% 48%, rgba(56,189,248,0.28), transparent 58%),
+      radial-gradient(ellipse 800px 700px at 92% 55%, rgba(251,191,36,0.3), transparent 58%),
+      radial-gradient(ellipse 850px 700px at 18% 92%, rgba(245,130,14,0.34), transparent 58%),
+      radial-gradient(ellipse 800px 650px at 98% 96%, rgba(56,189,248,0.28), transparent 58%),
+      #050914;
+  }
+
   .dot-grid {
     background-image: radial-gradient(rgba(148,180,255,0.18) 1px, transparent 1px);
     background-size: 26px 26px;
   }
 
   .card {
-    background: linear-gradient(180deg, rgba(20,37,83,0.35), rgba(10,18,48,0.25));
-    border: 1px solid rgba(255,255,255,0.12);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.3);
+    position: relative;
+    isolation: isolate;
+    border-radius: 30px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.15);
+    backdrop-filter: blur(55px) saturate(190%);
+    -webkit-backdrop-filter: blur(55px) saturate(190%);
+    box-shadow:
+      0 8px 32px rgba(0,0,0,.35),
+      inset 0 1px rgba(255,255,255,.2),
+      inset 0 -1px rgba(255,255,255,.04);
+    overflow: hidden;
+  }
+  /* barely-there grain so the glass never reads as a flat gradient */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.015;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* crisp specular line at the very top edge, fading fast into a soft wash */
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.55) 0%, transparent 2.5%),
+      linear-gradient(180deg, rgba(255,255,255,.08) 0%, transparent 24%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .card > * { position: relative; z-index: 1; }
+  /* logos/images inside a glass card must keep their true colors — no grain/blend tint */
+  .card img, .card svg { position: relative; z-index: 2; mix-blend-mode: normal; filter: none; }
+
+  /* soft color orbs so the glass has something colorful to refract */
+  .glow-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
   }
 
   .hex {
@@ -68,12 +127,33 @@
   }
   .float { animation: float 5s ease-in-out infinite; }
 
-  .nav-link { position: relative; }
-  .nav-link::after {
-    content: ''; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px;
-    background: #f5820e; transition: width .25s ease;
+  .nav-link {
+    position: relative;
+    padding: .55rem 1rem;
+    border-radius: 9999px;
+    white-space: nowrap;
+    transition: color .2s ease, background-color .2s ease, box-shadow .2s ease;
   }
-  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+  .nav-link:hover { background-color: rgba(255,255,255,.06); color: #fff; }
+  .nav-link.active {
+    color: #fff;
+    background-color: rgba(245,130,14,.28);
+    box-shadow: inset 0 0 0 1px rgba(245,130,14,.45);
+  }
+
+  /* ---- Modern floating navbar ---- */
+  #siteHeader {
+    transition: background-color .35s ease, box-shadow .35s ease, border-color .35s ease, padding .35s ease;
+  }
+  #siteHeader.scrolled {
+    background-color: rgba(5,9,20,.82);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    border-bottom-color: rgba(255,255,255,.1);
+  }
+  #siteHeader .logo-wrap img { transition: transform .35s ease; }
+  #siteHeader a.flex.items-center.gap-3:hover .logo-wrap img { transform: scale(1.06); }
 
   .avatar { background: linear-gradient(135deg, #f5820e, #38bdf8); }
 
@@ -130,9 +210,10 @@
 </style>
 </head>
 <body class="text-slate-200 antialiased">
+<div class="app-bg" aria-hidden="true"></div>
 
 <!-- ============ NAVBAR ============ -->
-<header class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
+<header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
   <div class="max-w-7xl mx-auto px-5 lg:px-8 h-24 flex items-center justify-between">
     <a href="#home" class="flex items-center gap-3 shrink-0">
       <div class="logo-wrap relative w-12 h-12 shrink-0">
@@ -168,7 +249,7 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <button class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 transition">
+      <button class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
       </button>
       <button id="menuBtn" class="lg:hidden text-white">
@@ -249,7 +330,7 @@
 <!-- ============ MISSION / VISION ============ -->
 <section class="relative mt-6 pb-20 px-5 lg:px-8">
   <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
-    <div class="card card-hover reveal rounded-2xl p-8">
+    <div class="card card-hover reveal rounded-[30px] p-8">
       <div class="w-14 h-14 rounded-full border-2 border-brand-blue flex items-center justify-center mb-5">
         <svg class="w-7 h-7 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".5" fill="currentColor"/></svg>
       </div>
@@ -260,7 +341,7 @@
         with Saudi Vision 2030.
       </p>
     </div>
-    <div class="card card-hover reveal reveal-d2 rounded-2xl p-8">
+    <div class="card card-hover reveal reveal-d2 rounded-[30px] p-8">
       <div class="w-14 h-14 rounded-full border-2 border-brand-blue flex items-center justify-center mb-5">
         <svg class="w-7 h-7 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
       </div>
@@ -284,37 +365,37 @@
     <p class="text-slate-400 text-sm mb-14 reveal reveal-d1">CIAS's work is anchored in the core pillars that define the Kingdom's transformation journey.</p>
 
     <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-      <div class="pillar-chip card rounded-2xl p-6 flex flex-col items-center gap-3 reveal reveal-d1">
+      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d1">
         <div class="w-14 h-14 rounded-full border-2 border-emerald-400 flex items-center justify-center">
           <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-9.5-8.5C.7 9 2.5 5.5 6 5.5c2 0 3.4 1.2 4 2.3.6-1.1 2-2.3 4-2.3 3.5 0 5.3 3.5 3.5 7C19 16.65 12 21 12 21z"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Vibrant Society</h4>
       </div>
-      <div class="pillar-chip card rounded-2xl p-6 flex flex-col items-center gap-3 reveal reveal-d2">
+      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d2">
         <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
           <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-5 4 4 8-8M20 8V4h-4"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Thriving Economy</h4>
       </div>
-      <div class="pillar-chip card rounded-2xl p-6 flex flex-col items-center gap-3 reveal reveal-d3">
+      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d3">
         <div class="w-14 h-14 rounded-full border-2 border-brand-blue flex items-center justify-center">
           <svg class="w-7 h-7 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2L3 21h18L12 2z"/><path stroke-linecap="round" d="M12 10v6"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">An Ambitious Nation</h4>
       </div>
-      <div class="pillar-chip card rounded-2xl p-6 flex flex-col items-center gap-3 reveal reveal-d4">
+      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d4">
         <div class="w-14 h-14 rounded-full border-2 border-teal-400 flex items-center justify-center">
           <svg class="w-7 h-7 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Responsible Nation</h4>
       </div>
-      <div class="pillar-chip card rounded-2xl p-6 flex flex-col items-center gap-3 reveal reveal-d5">
+      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d5">
         <div class="w-14 h-14 rounded-full border-2 border-purple-400 flex items-center justify-center">
           <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Forward Nation</h4>
       </div>
-      <div class="pillar-chip card rounded-2xl p-6 flex flex-col items-center gap-3 reveal reveal-d6">
+      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d6">
         <div class="w-14 h-14 rounded-full border-2 border-sky-400 flex items-center justify-center">
           <svg class="w-7 h-7 text-sky-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>
         </div>
@@ -325,7 +406,7 @@
 </section>
 
 <!-- ============ ABOUT ============ -->
-<section id="about" class="px-5 lg:px-8 py-20 bg-navy-900/60 border-y border-white/5">
+<section id="about" class="px-5 lg:px-8 py-20 bg-navy-900/30 border-y border-white/5">
   <div class="max-w-3xl mx-auto text-center reveal">
     <p class="text-brand-orange font-semibold tracking-wide text-sm mb-2">ABOUT US</p>
     <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mb-5">Who We Are</h2>
@@ -359,50 +440,53 @@
 </section>
 
 <!-- ============ RESEARCH TRACKS ============ -->
-<section id="research" class="px-5 lg:px-8 py-20">
-  <div class="max-w-7xl mx-auto">
+<section id="research" class="relative px-5 lg:px-8 py-20 overflow-hidden">
+  <div class="glow-orb w-[420px] h-[420px] bg-brand-orange/40 -top-24 -left-24"></div>
+  <div class="glow-orb w-[380px] h-[380px] bg-brand-blue/30 top-1/3 -right-20"></div>
+  <div class="glow-orb w-[320px] h-[320px] bg-brand-gold/25 bottom-0 left-1/3"></div>
+  <div class="max-w-7xl mx-auto relative">
     <div class="text-center mb-14 reveal">
       <p class="text-brand-orange font-semibold tracking-wide text-sm mb-2">WHAT WE DO</p>
       <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold">Five Interconnected Research Tracks</h2>
       <p class="text-slate-400 text-sm max-w-2xl mx-auto mt-4">Each track is led by domain experts, ensuring AI innovation remains ethical, inclusive, interdisciplinary, and societally impactful.</p>
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="card card-hover rounded-2xl p-7 reveal reveal-d1">
+      <div class="card card-hover rounded-[30px] p-7 reveal reveal-d1">
         <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
           <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Cognitive Intelligence &amp; Inclusive Learning</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Enhancing educational access through AI-driven adaptive systems for diverse and marginalized populations.</p>
       </div>
-      <div class="card card-hover rounded-2xl p-7 reveal reveal-d2">
+      <div class="card card-hover rounded-[30px] p-7 reveal reveal-d2">
         <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
           <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="8" cy="12" r="3"/><circle cx="16" cy="12" r="3"/><path stroke-linecap="round" d="M11 12h2"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Social Dynamics &amp; Elicitive Learning</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Examining AI, ethics, culture, religion, and language in the context of Saudi Vision 2030.</p>
       </div>
-      <div class="card card-hover rounded-2xl p-7 reveal reveal-d3">
+      <div class="card card-hover rounded-[30px] p-7 reveal reveal-d3">
         <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
           <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/><path stroke-linecap="round" d="M9 19h4M10 21h2"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">AI Integration in Education &amp; Healthcare</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Pioneering agentic AI systems for educational governance and precision healthcare.</p>
       </div>
-      <div class="card card-hover rounded-2xl p-7 reveal reveal-d4">
+      <div class="card card-hover rounded-[30px] p-7 reveal reveal-d4">
         <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
           <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5M4 19h16M8 19v-6M12 19v-9M16 19v-4"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Mathematical Foundations &amp; Scientific Inquiry</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Advancing the mathematical, statistical, and computational foundations for AI and scientific discovery.</p>
       </div>
-      <div class="card card-hover rounded-2xl p-7 reveal reveal-d5">
+      <div class="card card-hover rounded-[30px] p-7 reveal reveal-d5">
         <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
           <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Transdisciplinary Humanities &amp; Societal Studies</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Exploring humanities, culture, and social sciences in shaping ethical AI systems.</p>
       </div>
-      <div class="card card-hover rounded-2xl p-7 flex flex-col items-center justify-center text-center reveal reveal-d6">
+      <div class="card card-hover rounded-[30px] p-7 flex flex-col items-center justify-center text-center reveal reveal-d6">
         <p class="text-slate-300 text-sm leading-relaxed mb-4">Explore every track in depth, including lead researchers and strategic aims.</p>
         <a href="about.html" class="btn-pop px-5 py-2.5 rounded-full border border-brand-orange text-brand-orange font-semibold hover:bg-brand-orange hover:text-navy-950 transition text-sm">View All Tracks</a>
       </div>
@@ -411,7 +495,7 @@
 </section>
 
 <!-- ============ PEOPLE ============ -->
-<section id="people" class="px-5 lg:px-8 py-20 bg-navy-900/60 border-y border-white/5">
+<section id="people" class="px-5 lg:px-8 py-20 bg-navy-900/30 border-y border-white/5">
   <div class="max-w-7xl mx-auto text-center reveal">
     <p class="text-brand-orange font-semibold tracking-wide text-sm mb-2">OUR TEAM</p>
     <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mb-5">Leadership &amp; Track Leaders</h2>
@@ -424,7 +508,7 @@
 </section>
 
 <!-- ============ COLLABORATIONS ============ -->
-<section id="collaborations" class="px-5 lg:px-8 py-20 bg-navy-900/60 border-y border-white/5">
+<section id="collaborations" class="px-5 lg:px-8 py-20 bg-navy-900/30 border-y border-white/5">
   <div class="max-w-7xl mx-auto text-center">
     <p class="text-brand-orange font-semibold tracking-wide text-sm mb-2 reveal">PARTNERS</p>
     <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mb-14 reveal">Our Collaborations</h2>
@@ -468,6 +552,11 @@
   const mobileMenu = document.getElementById('mobileMenu');
   menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  const siteHeader = document.getElementById('siteHeader');
+  const toggleHeaderScroll = () => siteHeader.classList.toggle('scrolled', window.scrollY > 20);
+  toggleHeaderScroll();
+  window.addEventListener('scroll', toggleHeaderScroll);
 
   const revealEls = document.querySelectorAll('.reveal');
   const revealIO = new IntersectionObserver((entries) => {
