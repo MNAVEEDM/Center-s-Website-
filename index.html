@@ -62,7 +62,8 @@
     position: relative;
     isolation: isolate;
     border-radius: 30px;
-    background: rgba(255,255,255,.05);
+    background-color: rgba(255,255,255,.05);
+    background-image: none;
     border: 1px solid rgba(255,255,255,.15);
     backdrop-filter: blur(55px) saturate(190%);
     -webkit-backdrop-filter: blur(55px) saturate(190%);
@@ -71,6 +72,10 @@
       inset 0 1px rgba(255,255,255,.2),
       inset 0 -1px rgba(255,255,255,.04);
     overflow: hidden;
+  }
+  /* mouse-tracked spotlight glow, position set via JS on .spotlight */
+  .card.spotlight {
+    background-image: radial-gradient(500px circle at var(--spot-x) var(--spot-y), rgba(245,130,14,0.16), transparent 45%);
   }
   /* barely-there grain so the glass never reads as a flat gradient */
   .card::before {
@@ -214,18 +219,16 @@
 
 <!-- ============ NAVBAR ============ -->
 <header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
-  <div class="w-full px-4 lg:px-6 h-24 flex items-center justify-between">
-    <a href="#home" class="flex items-center gap-3 shrink-0">
-      <div class="logo-wrap relative w-12 h-12 shrink-0">
-        <img src="logo.png" alt="CIAS Logo" class="w-12 h-12 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="w-12 h-12 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+  <div class="w-full pl-2 pr-4 lg:pl-3 lg:pr-6 h-16 flex items-center justify-between">
+    <a href="#home" class="flex items-center gap-2 shrink-0">
+      <div class="logo-wrap relative w-10 h-10 shrink-0">
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-10 h-10 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="w-10 h-10 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
       </div>
-      <div class="flex flex-col justify-center gap-2 py-2">
-        <p class="font-serif text-lg sm:text-xl text-white font-semibold leading-none tracking-tight">Center for <span class="text-brand-orange">Cognitive Intelligence<br class="hidden sm:block" /> and AI Systems</span></p>
-        <div class="leading-[1.4] space-y-0.5">
-          <p class="text-xs tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
-          <p class="text-xs text-slate-300">Prince Mohammad Bin Fahd University</p>
-        </div>
+      <div class="leading-tight">
+        <p class="font-serif text-lg text-white font-bold tracking-wide">CIAS</p>
+        <p class="text-[10px] tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
+        <p class="text-[10px] text-slate-300">Prince Mohammad Bin Fahd University</p>
       </div>
     </a>
 
@@ -244,7 +247,7 @@
       </div>
       <a href="people.html" class="nav-link">People</a>
       <a href="news.html" class="nav-link">News &amp; Events</a>
-      <a href="#collaborations" class="nav-link">Collaborations</a>
+      <a href="collaborations.html" class="nav-link">Collaborations</a>
       <a href="contact.html" class="nav-link">Contact</a>
     </nav>
 
@@ -264,7 +267,7 @@
     <a href="#research" class="block py-1">Research</a>
     <a href="people.html" class="block py-1">People</a>
     <a href="news.html" class="block py-1">News &amp; Events</a>
-    <a href="#collaborations" class="block py-1">Collaborations</a>
+    <a href="collaborations.html" class="block py-1">Collaborations</a>
     <a href="contact.html" class="block py-1">Contact</a>
   </div>
 </header>
@@ -290,7 +293,7 @@
     </div>
 
     <!-- Right: Globe graphic -->
-    <div class="relative flex items-center justify-center h-[420px] -translate-y-32 reveal in-view reveal-d2">
+    <div class="relative flex items-center justify-center h-[420px] -translate-y-[18rem] reveal in-view reveal-d2">
       <!-- Floating hex icons -->
       <div class="hex absolute -left-2 top-6 flex items-center justify-center float" style="animation-delay:.2s">
         <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/><path stroke-linecap="round" d="M9 19h4M10 21h2"/></svg>
@@ -317,7 +320,7 @@
 
       <!-- Center logo -->
       <div class="relative flex items-center justify-center z-10">
-        <img src="logo.png" alt="CIAS Logo" class="logo-spin w-[210px] h-[210px] rounded-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="logo-spin w-[210px] h-[210px] rounded-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
         <div class="globe" style="display:none;"></div>
       </div>
     </div>
@@ -331,8 +334,8 @@
 <section class="relative mt-6 pb-20 px-5 lg:px-8">
   <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
     <div class="card card-hover reveal rounded-[30px] p-8">
-      <div class="w-14 h-14 rounded-full border-2 border-brand-blue flex items-center justify-center mb-5">
-        <svg class="w-7 h-7 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".5" fill="currentColor"/></svg>
+      <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center mb-5">
+        <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".5" fill="currentColor"/></svg>
       </div>
       <h3 class="font-serif text-2xl text-white font-semibold mb-3">Our Mission</h3>
       <p class="text-slate-300 leading-relaxed">
@@ -342,8 +345,8 @@
       </p>
     </div>
     <div class="card card-hover reveal reveal-d2 rounded-[30px] p-8">
-      <div class="w-14 h-14 rounded-full border-2 border-brand-blue flex items-center justify-center mb-5">
-        <svg class="w-7 h-7 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center mb-5">
+        <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
       </div>
       <h3 class="font-serif text-2xl text-white font-semibold mb-3">Our Vision</h3>
       <p class="text-slate-300 leading-relaxed">
@@ -366,8 +369,8 @@
 
     <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d1">
-        <div class="w-14 h-14 rounded-full border-2 border-emerald-400 flex items-center justify-center">
-          <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-9.5-8.5C.7 9 2.5 5.5 6 5.5c2 0 3.4 1.2 4 2.3.6-1.1 2-2.3 4-2.3 3.5 0 5.3 3.5 3.5 7C19 16.65 12 21 12 21z"/></svg>
+        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
+          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-9.5-8.5C.7 9 2.5 5.5 6 5.5c2 0 3.4 1.2 4 2.3.6-1.1 2-2.3 4-2.3 3.5 0 5.3 3.5 3.5 7C19 16.65 12 21 12 21z"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Vibrant Society</h4>
       </div>
@@ -378,26 +381,26 @@
         <h4 class="text-white font-semibold text-sm">A Thriving Economy</h4>
       </div>
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d3">
-        <div class="w-14 h-14 rounded-full border-2 border-brand-blue flex items-center justify-center">
-          <svg class="w-7 h-7 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2L3 21h18L12 2z"/><path stroke-linecap="round" d="M12 10v6"/></svg>
+        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
+          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2L3 21h18L12 2z"/><path stroke-linecap="round" d="M12 10v6"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">An Ambitious Nation</h4>
       </div>
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d4">
-        <div class="w-14 h-14 rounded-full border-2 border-teal-400 flex items-center justify-center">
-          <svg class="w-7 h-7 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>
+        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
+          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Responsible Nation</h4>
       </div>
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d5">
-        <div class="w-14 h-14 rounded-full border-2 border-purple-400 flex items-center justify-center">
-          <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
+          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Forward Nation</h4>
       </div>
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d6">
-        <div class="w-14 h-14 rounded-full border-2 border-sky-400 flex items-center justify-center">
-          <svg class="w-7 h-7 text-sky-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>
+        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
+          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">An Encompassing Nation</h4>
       </div>
@@ -423,7 +426,7 @@
     </p>
     <div class="grid grid-cols-3 gap-6 max-w-md mx-auto">
       <div>
-        <p class="text-2xl font-serif font-bold text-white">5</p>
+        <p class="text-2xl font-serif font-bold text-white counter" data-count="5">0</p>
         <p class="text-xs text-slate-400 mt-1">Research Tracks</p>
       </div>
       <div>
@@ -431,7 +434,7 @@
         <p class="text-xs text-slate-400 mt-1">College of Sciences &amp; Human Studies</p>
       </div>
       <div>
-        <p class="text-2xl font-serif font-bold text-white">2030</p>
+        <p class="text-2xl font-serif font-bold text-white counter" data-count="2030">0</p>
         <p class="text-xs text-slate-400 mt-1">Vision Aligned</p>
       </div>
     </div>
@@ -452,36 +455,36 @@
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d1">
-        <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
-          <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/></svg>
+        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
+          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><path d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/><path d="M10 18h4M11 21h2"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Cognitive Intelligence &amp; Inclusive Learning</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Enhancing educational access through AI-driven adaptive systems for diverse and marginalized populations.</p>
       </div>
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d2">
-        <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
-          <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="8" cy="12" r="3"/><circle cx="16" cy="12" r="3"/><path stroke-linecap="round" d="M11 12h2"/></svg>
+        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
+          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><circle cx="8" cy="12" r="3.2"/><circle cx="16" cy="12" r="3.2"/><path d="M11.2 12h1.6"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Social Dynamics &amp; Elicitive Learning</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Examining AI, ethics, culture, religion, and language in the context of Saudi Vision 2030.</p>
       </div>
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d3">
-        <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
-          <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/><path stroke-linecap="round" d="M9 19h4M10 21h2"/></svg>
+        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
+          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><path d="M20.8 8.6c0 4.4-8.8 9.4-8.8 9.4S3.2 13 3.2 8.6a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/><path d="M6 11h2.3l1.4-2.8 2 5.6 1.3-2.8H16"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">AI Integration in Education &amp; Healthcare</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Pioneering agentic AI systems for educational governance and precision healthcare.</p>
       </div>
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d4">
-        <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
-          <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5M4 19h16M8 19v-6M12 19v-9M16 19v-4"/></svg>
+        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
+          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><path d="M4 19V5M4 19h16M8 19v-6M12 19v-9M16 19v-4"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Mathematical Foundations &amp; Scientific Inquiry</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Advancing the mathematical, statistical, and computational foundations for AI and scientific discovery.</p>
       </div>
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d5">
-        <div class="w-12 h-12 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-5">
-          <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
+        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
+          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Transdisciplinary Humanities &amp; Societal Studies</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Exploring humanities, culture, and social sciences in shaping ethical AI systems.</p>
@@ -507,28 +510,12 @@
   </div>
 </section>
 
-<!-- ============ COLLABORATIONS ============ -->
-<section id="collaborations" class="px-5 lg:px-8 py-20 bg-navy-900/30 border-y border-white/5">
-  <div class="max-w-7xl mx-auto text-center">
-    <p class="text-brand-orange font-semibold tracking-wide text-sm mb-2 reveal">PARTNERS</p>
-    <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mb-14 reveal">Our Collaborations</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-      <div class="card card-hover rounded-xl h-20 flex items-center justify-center text-slate-500 text-xs reveal reveal-d1">Partner Logo</div>
-      <div class="card card-hover rounded-xl h-20 flex items-center justify-center text-slate-500 text-xs reveal reveal-d2">Partner Logo</div>
-      <div class="card card-hover rounded-xl h-20 flex items-center justify-center text-slate-500 text-xs reveal reveal-d3">Partner Logo</div>
-      <div class="card card-hover rounded-xl h-20 flex items-center justify-center text-slate-500 text-xs reveal reveal-d4">Partner Logo</div>
-      <div class="card card-hover rounded-xl h-20 flex items-center justify-center text-slate-500 text-xs reveal reveal-d5">Partner Logo</div>
-      <div class="card card-hover rounded-xl h-20 flex items-center justify-center text-slate-500 text-xs reveal reveal-d6">Partner Logo</div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ FOOTER ============ -->
 <footer class="border-t border-white/5 bg-navy-950 px-5 lg:px-8 py-12">
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
     <div class="flex items-center gap-3">
       <div class="logo-wrap relative w-10 h-10 shrink-0">
-        <img src="logo.png" alt="CIAS Logo" class="logo-spin w-10 h-10 rounded-full object-cover" onerror="this.style.display='none'" />
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="logo-spin w-10 h-10 rounded-full object-cover" onerror="this.style.display='none'" />
       </div>
       <p class="font-serif text-white font-semibold">Center for Cognitive Intelligence and AI Systems</p>
     </div>
@@ -565,6 +552,35 @@
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach(el => revealIO.observe(el));
+
+  const counters = document.querySelectorAll('.counter');
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      counterIO.unobserve(entry.target);
+      const target = parseInt(entry.target.dataset.count, 10);
+      const duration = 1200;
+      const start = performance.now();
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        entry.target.textContent = Math.round(target * eased);
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterIO.observe(el));
+
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+      card.classList.add('spotlight');
+    });
+    card.addEventListener('mouseleave', () => card.classList.remove('spotlight'));
+  });
 </script>
 </body>
 </html>

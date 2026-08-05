@@ -58,7 +58,8 @@
     position: relative;
     isolation: isolate;
     border-radius: 30px;
-    background: rgba(255,255,255,.05);
+    background-color: rgba(255,255,255,.05);
+    background-image: none;
     border: 1px solid rgba(255,255,255,.15);
     backdrop-filter: blur(55px) saturate(190%);
     -webkit-backdrop-filter: blur(55px) saturate(190%);
@@ -67,6 +68,10 @@
       inset 0 1px rgba(255,255,255,.2),
       inset 0 -1px rgba(255,255,255,.04);
     overflow: hidden;
+  }
+  /* mouse-tracked spotlight glow, position set via JS on .spotlight */
+  .card.spotlight {
+    background-image: radial-gradient(500px circle at var(--spot-x) var(--spot-y), rgba(245,130,14,0.16), transparent 45%);
   }
   /* barely-there grain so the glass never reads as a flat gradient */
   .card::before {
@@ -202,16 +207,16 @@
 
 <!-- ============ NAVBAR ============ -->
 <header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
-  <div class="w-full px-4 lg:px-6 h-20 flex items-center justify-between">
-    <a href="index.html" class="flex items-center gap-3 shrink-0">
-      <div class="logo-wrap relative w-12 h-12 shrink-0">
-        <img src="logo.png" alt="CIAS Logo" class="logo-spin w-12 h-12 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="logo-spin w-12 h-12 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+  <div class="w-full pl-2 pr-4 lg:pl-3 lg:pr-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2 shrink-0">
+      <div class="logo-wrap relative w-10 h-10 shrink-0">
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-10 h-10 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="w-10 h-10 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
       </div>
       <div class="leading-tight">
-        <p class="font-serif text-base sm:text-lg text-white font-semibold -mb-0.5">Center for <span class="text-brand-orange">Cognitive Intelligence<br class="hidden sm:block" /> and AI Systems</span></p>
-        <p class="text-[11px] tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
-        <p class="text-[11px] text-slate-300">Prince Mohammad Bin Fahd University</p>
+        <p class="font-serif text-lg text-white font-bold tracking-wide">CIAS</p>
+        <p class="text-[10px] tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
+        <p class="text-[10px] text-slate-300">Prince Mohammad Bin Fahd University</p>
       </div>
     </a>
 
@@ -230,7 +235,7 @@
       </div>
       <a href="people.html" class="nav-link active">People</a>
       <a href="news.html" class="nav-link">News &amp; Events</a>
-      <a href="index.html#collaborations" class="nav-link">Collaborations</a>
+      <a href="collaborations.html" class="nav-link">Collaborations</a>
       <a href="contact.html" class="nav-link">Contact</a>
     </nav>
 
@@ -250,7 +255,7 @@
     <a href="index.html#research" class="block py-1">Research</a>
     <a href="people.html" class="block py-1 text-brand-orange">People</a>
     <a href="news.html" class="block py-1">News &amp; Events</a>
-    <a href="index.html#collaborations" class="block py-1">Collaborations</a>
+    <a href="collaborations.html" class="block py-1">Collaborations</a>
     <a href="contact.html" class="block py-1">Contact</a>
   </div>
 </header>
@@ -277,7 +282,7 @@
     <div class="relative flex items-center justify-center h-[300px] reveal in-view reveal-d2">
       <div class="globe-ring w-[300px] h-[300px] ring-spin-slow"></div>
       <div class="globe-ring w-[340px] h-[340px] opacity-60 ring-spin-slow-rev"></div>
-      <img src="logo.png" alt="CIAS Logo" class="logo-spin w-[260px] h-[260px] rounded-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <img src="images/final-logo.jpg" alt="CIAS Logo" class="logo-spin w-[260px] h-[260px] rounded-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
       <div class="globe" style="display:none;"></div>
       <div class="absolute -bottom-2 w-64 h-10 rounded-full bg-brand-orange/50 blur-3xl"></div>
     </div>
@@ -353,8 +358,7 @@
 
         <!-- 01 -->
         <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d1">
-          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
-            <div class="track-num orange mx-auto lg:mx-0"><span class="font-serif font-extrabold">01</span></div>
+          <div class="grid lg:grid-cols-[300px,1fr] gap-5 lg:items-start">
             <div class="flex items-center gap-4">
               <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-orange/60 shrink-0">
                 <img src="images/leader-1.jpg" alt="Dr. Arifi Noman Mohammed Waked" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -382,8 +386,7 @@
 
         <!-- 02 -->
         <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d2">
-          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
-            <div class="track-num blue mx-auto lg:mx-0"><span class="font-serif font-extrabold">02</span></div>
+          <div class="grid lg:grid-cols-[300px,1fr] gap-5 lg:items-start">
             <div class="flex items-center gap-4">
               <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-blue/60 shrink-0">
                 <img src="images/leader-2.jpg" alt="Dr. Jose P. Cerin" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -412,8 +415,7 @@
 
         <!-- 03 -->
         <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d3">
-          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
-            <div class="track-num orange mx-auto lg:mx-0"><span class="font-serif font-extrabold">03</span></div>
+          <div class="grid lg:grid-cols-[300px,1fr] gap-5 lg:items-start">
             <div class="flex items-center gap-4">
               <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-orange/60 shrink-0">
                 <img src="images/leader-3.jpg" alt="Dr. Alia Amir" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -442,8 +444,7 @@
 
         <!-- 04 -->
         <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d4">
-          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
-            <div class="track-num blue mx-auto lg:mx-0"><span class="font-serif font-extrabold">04</span></div>
+          <div class="grid lg:grid-cols-[300px,1fr] gap-5 lg:items-start">
             <div class="flex items-center gap-4">
               <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-blue/60 shrink-0">
                 <img src="images/leader-4.jpg" alt="Dr. Najma Saleem" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -473,8 +474,7 @@
 
         <!-- 05 -->
         <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d5">
-          <div class="grid lg:grid-cols-[auto,300px,1fr] gap-5 lg:items-center">
-            <div class="track-num orange mx-auto lg:mx-0"><span class="font-serif font-extrabold">05</span></div>
+          <div class="grid lg:grid-cols-[300px,1fr] gap-5 lg:items-start">
             <div class="flex items-center gap-4">
               <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-orange/60 shrink-0">
                 <img src="images/leader-5.jpg" alt="Dr. Edyta Wolny-Ibrahim" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -525,7 +525,7 @@
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
     <div class="flex items-center gap-3">
       <div class="logo-wrap relative w-10 h-10 shrink-0">
-        <img src="logo.png" alt="CIAS Logo" class="logo-spin w-10 h-10 rounded-full object-cover" onerror="this.style.display='none'" />
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="logo-spin w-10 h-10 rounded-full object-cover" onerror="this.style.display='none'" />
       </div>
       <p class="font-serif text-white font-semibold">Center for Cognitive Intelligence and AI Systems</p>
     </div>
@@ -575,6 +575,16 @@
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach(el => revealIO.observe(el));
+
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+      card.classList.add('spotlight');
+    });
+    card.addEventListener('mouseleave', () => card.classList.remove('spotlight'));
+  });
 </script>
 </body>
 </html>
