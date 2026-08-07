@@ -167,14 +167,14 @@
 <header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
   <div class="w-full pl-2 pr-4 lg:pl-3 lg:pr-6 h-[72px] flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-2 shrink-0">
-      <div class="logo-wrap relative w-10 h-10 shrink-0">
-        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-10 h-10 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="w-10 h-10 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+      <div class="logo-wrap relative w-14 h-14 shrink-0">
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="w-14 h-14 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
       </div>
       <div class="leading-tight">
-        <p class="font-serif text-lg text-white font-bold tracking-wide">CIAS</p>
-        <p class="text-[10px] tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
-        <p class="text-[10px] text-slate-300">Prince Mohammad Bin Fahd University</p>
+        <p class="font-serif text-lg text-brand-orange font-bold tracking-wide">CIAS</p>
+        <p class="text-[12px] sm:text-[13px] tracking-wide text-brand-blue font-semibold">Center for Cognitive Intelligence &amp; AI Systems</p>
+        <p class="text-[11px] sm:text-[12px] text-slate-200 font-medium tracking-wide">Prince Mohammad Bin Fahd University</p>
       </div>
     </a>
 
@@ -198,9 +198,19 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <button class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
-      </button>
+      <div class="relative">
+        <button id="searchBtn" type="button" aria-label="Search" aria-haspopup="true" aria-expanded="false" class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+        </button>
+        <div id="searchPanel" class="hidden absolute right-0 mt-3 w-72 sm:w-80 card rounded-2xl p-3 z-50">
+          <div class="relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+            <input id="searchInput" type="text" placeholder="Search the site..." autocomplete="off"
+              class="w-full bg-black/40 border border-white/10 rounded-lg pl-9 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
+          </div>
+          <ul id="searchResults" class="mt-2 max-h-72 overflow-y-auto space-y-0.5"></ul>
+        </div>
+      </div>
       <button id="menuBtn" class="lg:hidden text-white">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
@@ -224,37 +234,38 @@
     <div class="reveal in-view">
       <p class="text-white font-bold tracking-wide text-sm mb-2">GET IN TOUCH</p>
       <h1 class="font-serif text-3xl sm:text-4xl text-brand-orange font-bold mb-6">Contact Us</h1>
-      <p class="text-slate-300 leading-relaxed mb-8">Have a question or want to collaborate with us? Send a message and our team will get back to you.</p>
+      <p class="text-slate-200 leading-relaxed mb-8">Have a question or want to collaborate with us? Send a message and our team will get back to you.</p>
       <div class="space-y-5">
         <div class="flex items-center gap-4">
           <div class="w-11 h-11 rounded-full border border-brand-blue/50 flex items-center justify-center shrink-0">
             <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-6-7-11a7 7 0 1114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
           </div>
-          <p class="text-slate-300 text-sm">Prince Mohammad Bin Fahd University, Al Khobar, Saudi Arabia</p>
+          <p class="text-slate-100 text-sm">Prince Mohammad Bin Fahd University, Al Khobar, Saudi Arabia</p>
         </div>
         <div class="flex items-center gap-4">
           <div class="w-11 h-11 rounded-full border border-brand-blue/50 flex items-center justify-center shrink-0">
             <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h4l2 5-2.5 1.5a11 11 0 005 5L13 14l5 2v4a2 2 0 01-2 2C8.6 22 2 15.4 2 7a2 2 0 012-2z"/></svg>
           </div>
-          <p class="text-slate-300 text-sm">+966 13 000 0000</p>
+          <p class="text-slate-100 text-sm">+966 13 000 0000</p>
         </div>
         <div class="flex items-center gap-4">
           <div class="w-11 h-11 rounded-full border border-brand-blue/50 flex items-center justify-center shrink-0">
             <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M3 7l9 6 9-6"/></svg>
           </div>
-          <p class="text-slate-300 text-sm">cias@pmu.edu.sa</p>
+          <p class="text-slate-100 text-sm">cias@pmu.edu.sa</p>
         </div>
       </div>
     </div>
 
-    <form class="card card-hover rounded-2xl p-8 space-y-5 reveal in-view reveal-d2" style="background-color: rgba(0,0,0,0.55);" onsubmit="event.preventDefault(); alert('Thank you! This is a demo form.');">
+    <form id="contactForm" class="card card-hover rounded-2xl p-8 space-y-5 reveal in-view reveal-d2" style="background-color: rgba(0,0,0,0.55);">
+      <div id="formStatus" class="hidden rounded-lg px-4 py-3 text-sm font-medium"></div>
       <div class="grid sm:grid-cols-2 gap-5">
-        <input type="text" placeholder="Full Name" class="w-full bg-black/60 border border-white/10 rounded-lg px-4 py-3 text-sm font-semibold text-white placeholder-slate-400 placeholder:font-normal focus:outline-none focus:border-brand-orange transition" required />
-        <input type="email" placeholder="Email Address" class="w-full bg-black/60 border border-white/10 rounded-lg px-4 py-3 text-sm font-semibold text-white placeholder-slate-400 placeholder:font-normal focus:outline-none focus:border-brand-orange transition" required />
+        <input type="text" id="cf-name" placeholder="Full Name" class="w-full bg-black/60 border border-white/10 rounded-lg px-4 py-3 text-sm font-semibold text-white placeholder-slate-400 placeholder:font-normal focus:outline-none focus:border-brand-orange transition" required />
+        <input type="email" id="cf-email" placeholder="Email Address" class="w-full bg-black/60 border border-white/10 rounded-lg px-4 py-3 text-sm font-semibold text-white placeholder-slate-400 placeholder:font-normal focus:outline-none focus:border-brand-orange transition" required />
       </div>
-      <input type="text" placeholder="Subject" class="w-full bg-black/60 border border-white/10 rounded-lg px-4 py-3 text-sm font-semibold text-white placeholder-slate-400 placeholder:font-normal focus:outline-none focus:border-brand-orange transition" />
-      <textarea rows="5" placeholder="Your Message" class="w-full bg-black/60 border border-white/10 rounded-lg px-4 py-3 text-sm font-semibold text-white placeholder-slate-400 placeholder:font-normal focus:outline-none focus:border-brand-orange transition"></textarea>
-      <button type="submit" class="btn-pop w-full py-3 rounded-lg bg-brand-orange text-navy-950 font-semibold hover:bg-orange-400 transition">Send Message</button>
+      <input type="text" id="cf-subject" placeholder="Subject" class="w-full bg-black/60 border border-white/10 rounded-lg px-4 py-3 text-sm font-semibold text-white placeholder-slate-400 placeholder:font-normal focus:outline-none focus:border-brand-orange transition" required />
+      <textarea rows="5" id="cf-message" placeholder="Your Message" class="w-full bg-black/60 border border-white/10 rounded-lg px-4 py-3 text-sm font-semibold text-white placeholder-slate-400 placeholder:font-normal focus:outline-none focus:border-brand-orange transition" required></textarea>
+      <button type="submit" id="cf-submit" class="btn-pop w-full py-3 rounded-lg bg-brand-orange text-navy-950 font-semibold hover:bg-orange-400 transition">Send Message</button>
     </form>
   </div>
 </section>
@@ -266,7 +277,7 @@
       <div class="grid lg:grid-cols-[1fr,420px] gap-8 items-center">
         <div>
           <h3 class="font-serif text-xl sm:text-2xl text-white font-bold mb-3">Find Us</h3>
-          <p class="text-slate-300 text-sm leading-relaxed mb-6">
+          <p class="text-slate-200 text-sm leading-relaxed mb-6">
             Prince Mohammad Bin Fahd University, Al Khobar, Saudi Arabia
           </p>
           <a href="https://www.google.com/maps/dir/?api=1&destination=Prince+Mohammad+Bin+Fahd+University,+Al+Khobar,+Saudi+Arabia" target="_blank" rel="noopener noreferrer" class="btn-pop inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-orange text-navy-950 font-semibold hover:bg-orange-400 transition text-sm">
@@ -294,10 +305,10 @@
           <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-11 h-11 rounded-full object-cover ring-2 ring-brand-orange/60 shrink-0" onerror="this.style.display='none'" />
           <div class="leading-tight">
             <p class="font-serif text-white font-bold text-lg">CIAS</p>
-            <p class="text-slate-400 text-xs">Center for Cognitive Intelligence and AI Systems</p>
+            <p class="text-slate-300 text-xs">Center for Cognitive Intelligence and AI Systems</p>
           </div>
         </a>
-        <p class="text-slate-400 text-sm leading-relaxed">
+        <p class="text-slate-300 text-sm leading-relaxed">
           An international research and innovation hub at Prince Mohammad Bin Fahd University, advancing
           Human-AI institutional development in higher education, aligned with Saudi Vision 2030.
         </p>
@@ -306,7 +317,7 @@
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
         <div>
           <h4 class="text-white font-serif font-semibold mb-4 pb-2 border-b-2 border-brand-orange inline-block">Explore</h4>
-          <ul class="space-y-2.5 text-sm text-slate-400">
+          <ul class="space-y-2.5 text-sm text-slate-300">
             <li><a href="index.html#home" class="hover:text-brand-orange transition">Home</a></li>
             <li><a href="about.html" class="hover:text-brand-orange transition">About CIAS</a></li>
             <li><a href="news.html" class="hover:text-brand-orange transition">News &amp; Events</a></li>
@@ -315,7 +326,7 @@
         </div>
         <div>
           <h4 class="text-white font-serif font-semibold mb-4 pb-2 border-b-2 border-brand-orange inline-block">Research</h4>
-          <ul class="space-y-2.5 text-sm text-slate-400">
+          <ul class="space-y-2.5 text-sm text-slate-300">
             <li><a href="about.html" class="hover:text-brand-orange transition">Research Tracks</a></li>
             <li><a href="index.html#research" class="hover:text-brand-orange transition">Focus Areas</a></li>
             <li><a href="people.html" class="hover:text-brand-orange transition">Track Leaders</a></li>
@@ -324,7 +335,7 @@
         </div>
         <div>
           <h4 class="text-white font-serif font-semibold mb-4 pb-2 border-b-2 border-brand-orange inline-block">People</h4>
-          <ul class="space-y-2.5 text-sm text-slate-400">
+          <ul class="space-y-2.5 text-sm text-slate-300">
             <li><a href="people.html" class="hover:text-brand-orange transition">Leadership</a></li>
             <li><a href="people.html" class="hover:text-brand-orange transition">Senior Affiliates</a></li>
             <li><a href="people.html" class="hover:text-brand-orange transition">Junior Affiliates</a></li>
@@ -333,7 +344,7 @@
         </div>
         <div>
           <h4 class="text-white font-serif font-semibold mb-4 pb-2 border-b-2 border-brand-orange inline-block">Get in Touch</h4>
-          <ul class="space-y-2.5 text-sm text-slate-400">
+          <ul class="space-y-2.5 text-sm text-slate-300">
             <li><a href="contact.html" class="hover:text-brand-orange transition">Contact Us</a></li>
             <li><a href="collaborations.html" class="hover:text-brand-orange transition">Our Partners</a></li>
             <li><a href="people.html" class="hover:text-brand-orange transition">Our People</a></li>
@@ -360,7 +371,7 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l16 16M20 4L4 20"/></svg>
         </a>
       </div>
-      <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-4 text-xs text-slate-500 text-center">
+      <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-4 text-xs text-slate-400 text-center">
         <p>&copy; 2026 Center for Cognitive Intelligence and AI Systems. All rights reserved.</p>
         <p>Prince Mohammad Bin Fahd University</p>
       </div>
@@ -412,5 +423,54 @@
     card.addEventListener('mouseleave', () => card.classList.remove('spotlight'));
   });
 </script>
+
+<script type="module">
+  import { db } from './js/firebase-config.js';
+  import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+  const form = document.getElementById('contactForm');
+  const statusBox = document.getElementById('formStatus');
+  const submitBtn = document.getElementById('cf-submit');
+
+  function showStatus(message, type) {
+    statusBox.textContent = message;
+    statusBox.className = type === 'success'
+      ? 'rounded-lg px-4 py-3 text-sm font-medium bg-green-500/15 text-green-400 border border-green-500/40'
+      : 'rounded-lg px-4 py-3 text-sm font-medium bg-red-500/15 text-red-400 border border-red-500/40';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const subject = document.getElementById('cf-subject').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    try {
+      await addDoc(collection(db, 'messages'), {
+        name,
+        email,
+        subject,
+        message,
+        status: 'new',
+        timestamp: serverTimestamp()
+      });
+      showStatus('Thank you! Your message has been sent successfully.', 'success');
+      form.reset();
+    } catch (err) {
+      console.error('Failed to submit message:', err);
+      showStatus('Something went wrong. Please try again later.', 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message';
+      setTimeout(() => statusBox.classList.add('hidden'), 6000);
+    }
+  });
+</script>
+<script src="js/site-search.js"></script>
 </body>
 </html>

@@ -186,14 +186,14 @@
 <header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
   <div class="w-full pl-2 pr-4 lg:pl-3 lg:pr-6 h-[72px] flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-2 shrink-0">
-      <div class="logo-wrap relative w-10 h-10 shrink-0">
-        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-10 h-10 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="w-10 h-10 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+      <div class="logo-wrap relative w-14 h-14 shrink-0">
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="w-14 h-14 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
       </div>
       <div class="leading-tight">
-        <p class="font-serif text-lg text-white font-bold tracking-wide">CIAS</p>
-        <p class="text-[10px] tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
-        <p class="text-[10px] text-slate-300">Prince Mohammad Bin Fahd University</p>
+        <p class="font-serif text-lg text-brand-orange font-bold tracking-wide">CIAS</p>
+        <p class="text-[12px] sm:text-[13px] tracking-wide text-brand-blue font-semibold">Center for Cognitive Intelligence &amp; AI Systems</p>
+        <p class="text-[11px] sm:text-[12px] text-slate-200 font-medium tracking-wide">Prince Mohammad Bin Fahd University</p>
       </div>
     </a>
 
@@ -217,9 +217,19 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <button class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
-      </button>
+      <div class="relative">
+        <button id="searchBtn" type="button" aria-label="Search" aria-haspopup="true" aria-expanded="false" class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+        </button>
+        <div id="searchPanel" class="hidden absolute right-0 mt-3 w-72 sm:w-80 card rounded-2xl p-3 z-50">
+          <div class="relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+            <input id="searchInput" type="text" placeholder="Search the site..." autocomplete="off"
+              class="w-full bg-black/40 border border-white/10 rounded-lg pl-9 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
+          </div>
+          <ul id="searchResults" class="mt-2 max-h-72 overflow-y-auto space-y-0.5"></ul>
+        </div>
+      </div>
       <button id="menuBtn" class="lg:hidden text-white">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
@@ -428,5 +438,6 @@
     card.addEventListener('mouseleave', () => card.classList.remove('spotlight'));
   });
 </script>
+<script src="js/site-search.js"></script>
 </body>
 </html>
