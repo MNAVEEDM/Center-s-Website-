@@ -104,11 +104,42 @@
   /* logos/images inside a glass card must keep their true colors — no grain/blend tint */
   .card img, .card svg { position: relative; z-index: 2; mix-blend-mode: normal; filter: none; }
 
-  .hex {
-    clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
-    background: linear-gradient(145deg, #fb9a3d, #f5820e 55%, #d96f08);
-    box-shadow: 0 0 18px rgba(245,130,14,0.45);
+  /* Icon badge: same glowing gradient-square design used on the homepage's
+     Research Tracks cards, so feature icons read as one system site-wide. */
+  .icon-box {
+    --glow: rgba(245,130,14,.5);
+    position: relative;
+    isolation: isolate;
+    background-size: 220% 220%;
+    background-position: 0% 0%;
+    animation: iconGlow 3s ease-in-out infinite;
+    transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, background-position .6s ease;
   }
+  .icon-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 28% 22%, rgba(255,255,255,.6), transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .icon-box::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: inherit;
+    background: inherit;
+    filter: blur(16px);
+    opacity: .6;
+    z-index: -1;
+  }
+  .icon-box svg { filter: drop-shadow(0 2px 4px rgba(0,0,0,.35)); position: relative; z-index: 2; }
+  @keyframes iconGlow {
+    0%, 100% { box-shadow: 0 10px 22px rgba(0,0,0,.35), 0 0 16px var(--glow), inset 0 1px rgba(255,255,255,.4), inset 0 -3px rgba(0,0,0,.18); }
+    50% { box-shadow: 0 12px 28px rgba(0,0,0,.35), 0 0 30px var(--glow), inset 0 1px rgba(255,255,255,.45), inset 0 -3px rgba(0,0,0,.18); }
+  }
+  .card-hover:hover .icon-box { transform: scale(1.12) rotate(-4deg); background-position: 100% 100%; }
 
   .nav-link {
     position: relative;
@@ -200,6 +231,16 @@
   .ring-spin-slow { animation: ringSpin 40s linear infinite; }
   .ring-spin-slow-rev { animation: ringSpinRev 55s linear infinite; }
 
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.04); }
+  }
+  .pulse-ring { animation: pulseGlow 4s ease-in-out infinite, ringSpin 30s linear infinite; }
+  .ring-glow-blue { filter: drop-shadow(0 0 16px rgba(56,189,248,.65)); }
+  .ring-glow-gold { filter: drop-shadow(0 0 16px rgba(251,191,36,.65)); }
+  .ring-glow-orange { filter: drop-shadow(0 0 16px rgba(245,130,14,.65)); }
+  .ring-dot { position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 9999px; }
+
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
   .reveal.in-view { opacity: 1; transform: translateY(0); }
   .reveal-d1 { transition-delay: .08s; } .reveal-d2 { transition-delay: .16s; }
@@ -232,14 +273,14 @@
 <header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
   <div class="w-full pl-2 pr-4 lg:pl-3 lg:pr-6 h-[72px] flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-2 shrink-0">
-      <div class="logo-wrap relative w-10 h-10 shrink-0">
-        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-10 h-10 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="w-10 h-10 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+      <div class="logo-wrap relative w-14 h-14 shrink-0">
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="w-14 h-14 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
       </div>
       <div class="leading-tight">
-        <p class="font-serif text-lg text-white font-bold tracking-wide">CIAS</p>
-        <p class="text-[10px] tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
-        <p class="text-[10px] text-slate-300">Prince Mohammad Bin Fahd University</p>
+        <p class="font-serif text-lg text-brand-orange font-bold tracking-wide">CIAS</p>
+        <p class="text-[12px] sm:text-[13px] tracking-wide text-brand-blue font-semibold">Center for Cognitive Intelligence &amp; AI Systems</p>
+        <p class="text-[11px] sm:text-[12px] text-slate-200 font-medium tracking-wide">Prince Mohammad Bin Fahd University</p>
       </div>
     </a>
 
@@ -263,9 +304,19 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <button class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
-      </button>
+      <div class="relative">
+        <button id="searchBtn" type="button" aria-label="Search" aria-haspopup="true" aria-expanded="false" class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+        </button>
+        <div id="searchPanel" class="hidden absolute right-0 mt-3 w-72 sm:w-80 card rounded-2xl p-3 z-50">
+          <div class="relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+            <input id="searchInput" type="text" placeholder="Search the site..." autocomplete="off"
+              class="w-full bg-black/40 border border-white/10 rounded-lg pl-9 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
+          </div>
+          <ul id="searchResults" class="mt-2 max-h-72 overflow-y-auto space-y-0.5"></ul>
+        </div>
+      </div>
       <button id="menuBtn" class="lg:hidden text-white">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
@@ -306,8 +357,15 @@
 
     <!-- Right: spinning logo graphic -->
     <div class="relative flex items-center justify-center h-[300px] reveal in-view reveal-d2">
-      <div class="globe-ring w-[300px] h-[300px] ring-spin-slow"></div>
-      <div class="globe-ring w-[340px] h-[340px] opacity-60 ring-spin-slow-rev"></div>
+      <div class="absolute w-[300px] h-[300px] rounded-full border-2 border-dashed border-brand-blue/70 pulse-ring ring-glow-blue">
+        <span class="ring-dot" style="background:#38bdf8; box-shadow:0 0 12px 4px rgba(56,189,248,.9);"></span>
+      </div>
+      <div class="absolute w-[320px] h-[320px] rounded-full border-2 border-brand-gold/60 ring-spin-slow ring-glow-gold">
+        <span class="ring-dot" style="background:#fbbf24; box-shadow:0 0 12px 4px rgba(251,191,36,.9);"></span>
+      </div>
+      <div class="absolute w-[340px] h-[340px] rounded-full border-2 border-dashed border-brand-orange/60 ring-spin-slow-rev ring-glow-orange">
+        <span class="ring-dot" style="background:#f5820e; box-shadow:0 0 12px 4px rgba(245,130,14,.9);"></span>
+      </div>
       <img src="images/final-logo.jpg" alt="CIAS Logo" class="logo-spin w-[260px] h-[260px] rounded-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
       <div class="globe" style="display:none;"></div>
       <div class="absolute -bottom-2 w-64 h-10 rounded-full bg-brand-orange/50 blur-3xl"></div>
@@ -319,8 +377,8 @@
 <section class="px-5 lg:px-8 pb-16 pt-10">
   <div class="max-w-7xl mx-auto space-y-6">
     <div class="card card-hover reveal rounded-2xl p-6 sm:p-7 border-l-4 border-l-brand-orange grid sm:grid-cols-[auto,1fr] gap-6">
-      <div class="hex w-16 h-16 flex items-center justify-center shrink-0 mx-auto sm:mx-0">
-        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-1a4 4 0 00-4-4H7a4 4 0 00-4 4v1M13 7a4 4 0 11-8 0 4 4 0 018 0zM23 20v-1a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 mx-auto sm:mx-0" style="--glow: rgba(251,191,36,.6); background: linear-gradient(135deg, #f5820e 0%, #fbbf24 100%);">
+        <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-1a4 4 0 00-4-4H7a4 4 0 00-4 4v1M13 7a4 4 0 11-8 0 4 4 0 018 0zM23 20v-1a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
       </div>
       <div>
         <h3 class="font-serif text-xl text-white font-semibold mb-3"><span class="text-brand-orange">Who</span> We Are</h3>
@@ -344,8 +402,8 @@
     </div>
 
     <div class="card card-hover reveal reveal-d1 rounded-2xl p-6 sm:p-7 border-l-4 border-l-brand-orange grid sm:grid-cols-[auto,1fr] gap-6">
-      <div class="hex w-16 h-16 flex items-center justify-center shrink-0 mx-auto sm:mx-0">
-        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/><path stroke-linecap="round" d="M12 3v2M21 12h-2"/></svg>
+      <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 mx-auto sm:mx-0" style="--glow: rgba(244,63,94,.6); background: linear-gradient(135deg, #f5820e 0%, #f43f5e 100%);">
+        <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/><path stroke-linecap="round" d="M12 3v2M21 12h-2"/></svg>
       </div>
       <div>
         <h3 class="font-serif text-xl text-white font-semibold mb-3"><span class="text-brand-orange">Miss</span>ion</h3>
@@ -360,8 +418,8 @@
     </div>
 
     <div class="card card-hover reveal reveal-d2 rounded-2xl p-6 sm:p-7 border-l-4 border-l-brand-orange grid sm:grid-cols-[auto,1fr] gap-6">
-      <div class="hex w-16 h-16 flex items-center justify-center shrink-0 mx-auto sm:mx-0">
-        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 mx-auto sm:mx-0" style="--glow: rgba(56,189,248,.6); background: linear-gradient(135deg, #f5820e 0%, #38bdf8 100%);">
+        <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
       </div>
       <div>
         <h3 class="font-serif text-xl text-white font-semibold mb-3"><span class="text-brand-orange">Vis</span>ion</h3>
@@ -395,7 +453,9 @@
       <div class="grid md:grid-cols-2 gap-8">
         <div class="card card-hover rounded-2xl p-7 reveal reveal-d1">
           <div class="flex items-center gap-4 mb-4">
-            <div class="track-num orange"><span class="font-serif font-extrabold text-base">01</span></div>
+            <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="--glow: rgba(251,191,36,.6); background: linear-gradient(135deg, #f5820e 0%, #fbbf24 100%);">
+              <svg class="w-6 h-6 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+            </div>
             <h3 class="text-white font-semibold text-lg">Institutional Leadership in Human-AI Innovation</h3>
           </div>
           <ul class="space-y-2 text-slate-300 text-sm leading-relaxed">
@@ -407,7 +467,9 @@
 
         <div class="card card-hover rounded-2xl p-7 reveal reveal-d2">
           <div class="flex items-center gap-4 mb-4">
-            <div class="track-num orange"><span class="font-serif font-extrabold text-base">02</span></div>
+            <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="--glow: rgba(244,63,94,.6); background: linear-gradient(135deg, #f5820e 0%, #f43f5e 100%);">
+              <svg class="w-6 h-6 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/></svg>
+            </div>
             <h3 class="text-white font-semibold text-lg">Ethical and Human-Centered AI Systems</h3>
           </div>
           <ul class="space-y-2 text-slate-300 text-sm leading-relaxed">
@@ -419,7 +481,9 @@
 
         <div class="card card-hover rounded-2xl p-7 reveal reveal-d3">
           <div class="flex items-center gap-4 mb-4">
-            <div class="track-num orange"><span class="font-serif font-extrabold text-base">03</span></div>
+            <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="--glow: rgba(56,189,248,.6); background: linear-gradient(135deg, #f5820e 0%, #38bdf8 100%);">
+              <svg class="w-6 h-6 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path stroke-linecap="round" d="M9 3v2M15 3v2M9 19v2M15 19v2M3 9h2M3 15h2M19 9h2M19 15h2"/></svg>
+            </div>
             <h3 class="text-white font-semibold text-lg">Advancement of Agentic AI and Cognitive Systems</h3>
           </div>
           <ul class="space-y-2 text-slate-300 text-sm leading-relaxed">
@@ -431,7 +495,9 @@
 
         <div class="card card-hover rounded-2xl p-7 reveal reveal-d4">
           <div class="flex items-center gap-4 mb-4">
-            <div class="track-num orange"><span class="font-serif font-extrabold text-base">04</span></div>
+            <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="--glow: rgba(168,85,247,.6); background: linear-gradient(135deg, #f5820e 0%, #a855f7 100%);">
+              <svg class="w-6 h-6 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
+            </div>
             <h3 class="text-white font-semibold text-lg">Research Excellence and Global Impact</h3>
           </div>
           <ul class="space-y-2 text-slate-300 text-sm leading-relaxed">
@@ -443,7 +509,9 @@
 
         <div class="card card-hover rounded-2xl p-7 md:col-span-2 reveal reveal-d5">
           <div class="flex items-center gap-4 mb-4">
-            <div class="track-num orange"><span class="font-serif font-extrabold text-base">05</span></div>
+            <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="--glow: rgba(16,185,129,.6); background: linear-gradient(135deg, #f5820e 0%, #10b981 100%);">
+              <svg class="w-6 h-6 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-9.5-8.5C.7 9 2.5 5.5 6 5.5c2 0 3.4 1.2 4 2.3.6-1.1 2-2.3 4-2.3 3.5 0 5.3 3.5 3.5 7C19 16.65 12 21 12 21z"/></svg>
+            </div>
             <h3 class="text-white font-semibold text-lg">Societal Transformation and Applied Innovation</h3>
           </div>
           <ul class="grid sm:grid-cols-3 gap-x-6 gap-y-2 text-slate-300 text-sm leading-relaxed">
@@ -659,8 +727,8 @@
 
       <div class="grid sm:grid-cols-2 gap-8">
         <div class="card card-hover rounded-2xl p-7 reveal reveal-d1">
-          <div class="w-12 h-12 rounded-lg bg-brand-orange flex items-center justify-center mb-5">
-            <svg class="w-6 h-6 text-slate-100" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+          <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="--glow: rgba(251,191,36,.6); background: linear-gradient(135deg, #f5820e 0%, #fbbf24 100%);">
+            <svg class="w-6 h-6 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
           </div>
           <h3 class="text-white font-semibold text-lg mb-3">Institutional Impact</h3>
           <ul class="space-y-2 text-slate-400 text-sm leading-relaxed">
@@ -671,8 +739,8 @@
         </div>
 
         <div class="card card-hover rounded-2xl p-7 reveal reveal-d2">
-          <div class="w-12 h-12 rounded-lg bg-brand-blue flex items-center justify-center mb-5">
-            <svg class="w-6 h-6 text-slate-100" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/><path stroke-linecap="round" d="M9 19h4M10 21h2"/></svg>
+          <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="--glow: rgba(56,189,248,.6); background: linear-gradient(135deg, #f5820e 0%, #38bdf8 100%);">
+            <svg class="w-6 h-6 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/><path stroke-linecap="round" d="M9 19h4M10 21h2"/></svg>
           </div>
           <h3 class="text-white font-semibold text-lg mb-3">Research &amp; Innovation Impact</h3>
           <ul class="space-y-2 text-slate-400 text-sm leading-relaxed">
@@ -683,8 +751,8 @@
         </div>
 
         <div class="card card-hover rounded-2xl p-7 reveal reveal-d3">
-          <div class="w-12 h-12 rounded-lg bg-brand-orange flex items-center justify-center mb-5">
-            <svg class="w-6 h-6 text-slate-100" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-9.5-8.5C.7 9 2.5 5.5 6 5.5c2 0 3.4 1.2 4 2.3.6-1.1 2-2.3 4-2.3 3.5 0 5.3 3.5 3.5 7C19 16.65 12 21 12 21z"/></svg>
+          <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="--glow: rgba(244,63,94,.6); background: linear-gradient(135deg, #f5820e 0%, #f43f5e 100%);">
+            <svg class="w-6 h-6 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-9.5-8.5C.7 9 2.5 5.5 6 5.5c2 0 3.4 1.2 4 2.3.6-1.1 2-2.3 4-2.3 3.5 0 5.3 3.5 3.5 7C19 16.65 12 21 12 21z"/></svg>
           </div>
           <h3 class="text-white font-semibold text-lg mb-3">Societal Impact</h3>
           <ul class="space-y-2 text-slate-400 text-sm leading-relaxed">
@@ -695,8 +763,8 @@
         </div>
 
         <div class="card card-hover rounded-2xl p-7 reveal reveal-d4">
-          <div class="w-12 h-12 rounded-lg bg-brand-blue flex items-center justify-center mb-5">
-            <svg class="w-6 h-6 text-slate-100" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
+          <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="--glow: rgba(16,185,129,.6); background: linear-gradient(135deg, #f5820e 0%, #10b981 100%);">
+            <svg class="w-6 h-6 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
           </div>
           <h3 class="text-white font-semibold text-lg mb-3">National &amp; Global Impact</h3>
           <ul class="space-y-2 text-slate-400 text-sm leading-relaxed">
@@ -711,8 +779,8 @@
     <!-- Positioning Statement -->
     <div class="tab-panel" id="tab-positioning">
       <div class="card card-hover reveal rounded-2xl p-10 sm:p-14 text-center max-w-4xl mx-auto border-l-4 border-l-brand-orange">
-        <div class="hex w-16 h-16 flex items-center justify-center mx-auto mb-6">
-          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.97-4.03 9-9 9-1.5 0-2.9-.37-4.15-1.02L3 21l1.02-3.85A8.96 8.96 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z"/></svg>
+        <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="--glow: rgba(168,85,247,.6); background: linear-gradient(135deg, #f5820e 0%, #a855f7 100%);">
+          <svg class="w-8 h-8 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.97-4.03 9-9 9-1.5 0-2.9-.37-4.15-1.02L3 21l1.02-3.85A8.96 8.96 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z"/></svg>
         </div>
         <p class="text-brand-orange font-semibold tracking-wide text-sm mb-4">POSITIONING STATEMENT</p>
         <p class="text-slate-200 text-xl leading-relaxed font-serif">
@@ -867,5 +935,6 @@
     card.addEventListener('mouseleave', () => card.classList.remove('spotlight'));
   });
 </script>
+<script src="js/site-search.js"></script>
 </body>
 </html>

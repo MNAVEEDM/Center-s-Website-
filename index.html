@@ -123,22 +123,65 @@
   .hex {
     position: relative;
     width: 60px; height: 60px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='30,5 70,5 95,30 95,70 70,95 30,95 5,70 5,30' fill='none' stroke='%23f5820e' stroke-width='3'/%3E%3Ccircle cx='30' cy='5' r='3.2' fill='%23f5820e'/%3E%3Ccircle cx='70' cy='5' r='3.2' fill='%23f5820e'/%3E%3Ccircle cx='95' cy='30' r='3.2' fill='%23f5820e'/%3E%3Ccircle cx='95' cy='70' r='3.2' fill='%23f5820e'/%3E%3Ccircle cx='70' cy='95' r='3.2' fill='%23f5820e'/%3E%3Ccircle cx='30' cy='95' r='3.2' fill='%23f5820e'/%3E%3Ccircle cx='5' cy='70' r='3.2' fill='%23f5820e'/%3E%3Ccircle cx='5' cy='30' r='3.2' fill='%23f5820e'/%3E%3C/svg%3E");
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 35% 30%, rgba(245,130,14,0.28), rgba(6,10,24,.6) 70%);
+    border: 1px solid rgba(245,130,14,0.3);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: inset 0 1px rgba(255,255,255,.12), 0 6px 18px rgba(0,0,0,.35);
+    transition: transform .35s ease, box-shadow .35s ease;
+  }
+  .hex::before,
+  .hex::after {
+    content: '';
+    position: absolute;
+    inset: -7px;
+    border-radius: 9999px;
+    pointer-events: none;
+  }
+  .hex::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='hexGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='55%25' stop-color='%23f5820e'/%3E%3Cstop offset='100%25' stop-color='%23fb9a3d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='url(%23hexGrad)' stroke-width='3'/%3E%3Ccircle cx='50' cy='5' r='3.6' fill='%23fbbf24'/%3E%3Ccircle cx='81.8' cy='18.2' r='3.6' fill='%23f5820e'/%3E%3Ccircle cx='95' cy='50' r='3.6' fill='%23fbbf24'/%3E%3Ccircle cx='81.8' cy='81.8' r='3.6' fill='%23f5820e'/%3E%3Ccircle cx='50' cy='95' r='3.6' fill='%23fbbf24'/%3E%3Ccircle cx='18.2' cy='81.8' r='3.6' fill='%23f5820e'/%3E%3Ccircle cx='5' cy='50' r='3.6' fill='%23fbbf24'/%3E%3Ccircle cx='18.2' cy='18.2' r='3.6' fill='%23f5820e'/%3E%3C/svg%3E");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     filter: drop-shadow(0 0 10px rgba(245,130,14,0.55));
-    transition: transform .25s ease, filter .25s ease;
+    animation: hexSpin 16s linear infinite;
+  }
+  .hex::after {
+    border: 1px dashed rgba(56,189,248,0.4);
+    animation: hexSpin 24s linear infinite reverse;
+  }
+  @keyframes hexSpin {
+    to { transform: rotate(360deg); }
   }
   .hex:hover {
-    transform: scale(1.08);
-    filter: drop-shadow(0 0 16px rgba(245,130,14,0.85));
+    transform: scale(1.12) rotate(6deg);
+    box-shadow: inset 0 1px rgba(255,255,255,.18), 0 0 22px rgba(245,130,14,.55), 0 8px 22px rgba(0,0,0,.4);
+  }
+  .hex:hover::before {
+    filter: drop-shadow(0 0 18px rgba(245,130,14,0.9));
   }
 
   @keyframes pulseGlow {
     0%, 100% { opacity: 0.55; transform: scale(1); }
     50% { opacity: 1; transform: scale(1.04); }
   }
-  .pulse-ring { animation: pulseGlow 4s ease-in-out infinite; }
+  .pulse-ring { animation: pulseGlow 4s ease-in-out infinite, ringSpin 30s linear infinite; }
+
+  .ring-glow-blue { filter: drop-shadow(0 0 16px rgba(56,189,248,.65)); }
+  .ring-glow-gold { filter: drop-shadow(0 0 16px rgba(251,191,36,.65)); }
+  .ring-glow-orange { filter: drop-shadow(0 0 16px rgba(245,130,14,.65)); }
+  .ring-dot {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+  }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
@@ -224,6 +267,41 @@
   .btn-pop { transition: transform .25s ease, box-shadow .25s ease; }
   .btn-pop:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 28px rgba(245,130,14,0.35); }
 
+  .icon-box {
+    --glow: rgba(245,130,14,.5);
+    position: relative;
+    isolation: isolate;
+    background-size: 220% 220%;
+    background-position: 0% 0%;
+    animation: iconGlow 3s ease-in-out infinite;
+    transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, background-position .6s ease;
+  }
+  .icon-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 28% 22%, rgba(255,255,255,.6), transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .icon-box::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: inherit;
+    background: inherit;
+    filter: blur(16px);
+    opacity: .6;
+    z-index: -1;
+  }
+  .icon-box svg { filter: drop-shadow(0 2px 4px rgba(0,0,0,.35)); position: relative; z-index: 2; }
+  @keyframes iconGlow {
+    0%, 100% { box-shadow: 0 10px 22px rgba(0,0,0,.35), 0 0 16px var(--glow), inset 0 1px rgba(255,255,255,.4), inset 0 -3px rgba(0,0,0,.18); }
+    50% { box-shadow: 0 12px 28px rgba(0,0,0,.35), 0 0 30px var(--glow), inset 0 1px rgba(255,255,255,.45), inset 0 -3px rgba(0,0,0,.18); }
+  }
+  .card-hover:hover .icon-box { transform: scale(1.12) rotate(-4deg); background-position: 100% 100%; }
+
   .pillar-chip { transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
   .pillar-chip:hover { transform: translateY(-5px); border-color: rgba(245,130,14,0.7); box-shadow: 0 14px 30px rgba(245,130,14,0.2); }
   /* ---- Professional justified body copy ---- */
@@ -245,14 +323,14 @@
 <header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
   <div class="w-full pl-2 pr-4 lg:pl-3 lg:pr-6 h-[72px] flex items-center justify-between">
     <a href="#home" class="flex items-center gap-2 shrink-0">
-      <div class="logo-wrap relative w-10 h-10 shrink-0">
-        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-10 h-10 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="w-10 h-10 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+      <div class="logo-wrap relative w-14 h-14 shrink-0">
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="w-14 h-14 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
       </div>
       <div class="leading-tight">
-        <p class="font-serif text-lg text-white font-bold tracking-wide">CIAS</p>
-        <p class="text-[10px] tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
-        <p class="text-[10px] text-slate-300">Prince Mohammad Bin Fahd University</p>
+        <p class="font-serif text-lg text-brand-orange font-bold tracking-wide">CIAS</p>
+        <p class="text-[12px] sm:text-[13px] tracking-wide text-brand-blue font-semibold">Center for Cognitive Intelligence &amp; AI Systems</p>
+        <p class="text-[11px] sm:text-[12px] text-slate-200 font-medium tracking-wide">Prince Mohammad Bin Fahd University</p>
       </div>
     </a>
 
@@ -276,9 +354,19 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <button class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
-      </button>
+      <div class="relative">
+        <button id="searchBtn" type="button" aria-label="Search" aria-haspopup="true" aria-expanded="false" class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+        </button>
+        <div id="searchPanel" class="hidden absolute right-0 mt-3 w-72 sm:w-80 card rounded-2xl p-3 z-50">
+          <div class="relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+            <input id="searchInput" type="text" placeholder="Search the site..." autocomplete="off"
+              class="w-full bg-black/40 border border-white/10 rounded-lg pl-9 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
+          </div>
+          <ul id="searchResults" class="mt-2 max-h-72 overflow-y-auto space-y-0.5"></ul>
+        </div>
+      </div>
       <button id="menuBtn" class="lg:hidden text-white">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
@@ -343,8 +431,15 @@
       </div>
 
       <!-- Outer glow rings (slow rotation) -->
-      <div class="absolute w-80 h-80 rounded-full border border-dashed border-brand-blue/30 pulse-ring"></div>
-      <div class="absolute w-[22rem] h-[22rem] rounded-full border border-dashed border-brand-orange/25 ring-spin-slow-rev"></div>
+      <div class="absolute w-80 h-80 rounded-full border-2 border-dashed border-brand-blue/70 pulse-ring ring-glow-blue">
+        <span class="ring-dot" style="background:#38bdf8; box-shadow:0 0 12px 4px rgba(56,189,248,.9);"></span>
+      </div>
+      <div class="absolute w-[19rem] h-[19rem] rounded-full border-2 border-brand-gold/60 ring-spin-slow ring-glow-gold">
+        <span class="ring-dot" style="background:#fbbf24; box-shadow:0 0 12px 4px rgba(251,191,36,.9);"></span>
+      </div>
+      <div class="absolute w-[22rem] h-[22rem] rounded-full border-2 border-dashed border-brand-orange/60 ring-spin-slow-rev ring-glow-orange">
+        <span class="ring-dot" style="background:#f5820e; box-shadow:0 0 12px 4px rgba(245,130,14,.9);"></span>
+      </div>
 
       <!-- Center logo -->
       <div class="relative flex items-center justify-center z-10">
@@ -362,8 +457,8 @@
 <section class="relative mt-6 pb-20 px-5 lg:px-8">
   <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
     <div class="card card-hover reveal rounded-[30px] p-8">
-      <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center mb-5">
-        <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".5" fill="currentColor"/></svg>
+      <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="--glow: rgba(251,191,36,.6); background: linear-gradient(135deg, #f5820e 0%, #fbbf24 100%);">
+        <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".5" fill="currentColor"/></svg>
       </div>
       <h3 class="font-serif text-2xl text-white font-semibold mb-3">Our Mission</h3>
       <p class="text-slate-300 leading-relaxed">
@@ -373,8 +468,8 @@
       </p>
     </div>
     <div class="card card-hover reveal reveal-d2 rounded-[30px] p-8">
-      <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center mb-5">
-        <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="--glow: rgba(56,189,248,.6); background: linear-gradient(135deg, #f5820e 0%, #38bdf8 100%);">
+        <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
       </div>
       <h3 class="font-serif text-2xl text-white font-semibold mb-3">Our Vision</h3>
       <p class="text-slate-300 leading-relaxed">
@@ -397,38 +492,38 @@
 
     <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d1">
-        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
-          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-9.5-8.5C.7 9 2.5 5.5 6 5.5c2 0 3.4 1.2 4 2.3.6-1.1 2-2.3 4-2.3 3.5 0 5.3 3.5 3.5 7C19 16.65 12 21 12 21z"/></svg>
+        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(244,63,94,.6); background: linear-gradient(135deg, #f5820e 0%, #f43f5e 100%);">
+          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-9.5-8.5C.7 9 2.5 5.5 6 5.5c2 0 3.4 1.2 4 2.3.6-1.1 2-2.3 4-2.3 3.5 0 5.3 3.5 3.5 7C19 16.65 12 21 12 21z"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Vibrant Society</h4>
       </div>
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d2">
-        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
-          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-5 4 4 8-8M20 8V4h-4"/></svg>
+        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(56,189,248,.6); background: linear-gradient(135deg, #f5820e 0%, #38bdf8 100%);">
+          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-5 4 4 8-8M20 8V4h-4"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Thriving Economy</h4>
       </div>
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d3">
-        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
-          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2L3 21h18L12 2z"/><path stroke-linecap="round" d="M12 10v6"/></svg>
+        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(168,85,247,.6); background: linear-gradient(135deg, #f5820e 0%, #a855f7 100%);">
+          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2L3 21h18L12 2z"/><path stroke-linecap="round" d="M12 10v6"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">An Ambitious Nation</h4>
       </div>
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d4">
-        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
-          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>
+        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(16,185,129,.6); background: linear-gradient(135deg, #f5820e 0%, #10b981 100%);">
+          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Responsible Nation</h4>
       </div>
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d5">
-        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
-          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(251,191,36,.6); background: linear-gradient(135deg, #f5820e 0%, #fbbf24 100%);">
+          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">A Forward Nation</h4>
       </div>
       <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d6">
-        <div class="w-14 h-14 rounded-full border-2 border-brand-orange flex items-center justify-center">
-          <svg class="w-7 h-7 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>
+        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(6,182,212,.6); background: linear-gradient(135deg, #f5820e 0%, #06b6d4 100%);">
+          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>
         </div>
         <h4 class="text-white font-semibold text-sm">An Encompassing Nation</h4>
       </div>
@@ -438,33 +533,21 @@
 
 <!-- ============ ABOUT ============ -->
 <section id="about" class="px-5 lg:px-8 py-20 bg-navy-900/30 border-y border-white/5">
-  <div class="max-w-3xl mx-auto text-center reveal">
+  <div class="card rounded-[30px] max-w-[920px] mx-auto text-center reveal p-8 sm:p-12">
     <p class="text-brand-orange font-semibold tracking-wide text-sm mb-2">ABOUT US</p>
     <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mb-5">Who We Are</h2>
-    <p class="text-slate-300 leading-relaxed mb-4">
-      The Center for Cognitive Intelligence and AI Systems (CIAS) at Prince Mohammed Bin Fahd
-      University (PMU) is an international research and innovation hub dedicated to advancing
-      Human-AI Institutional Development in Higher Education, aligned with Saudi Arabia's Vision 2030.
-    </p>
-    <p class="text-slate-300 leading-relaxed mb-8">
-      CIAS brings together researchers from across the world to collaboratively enhance the human
-      and societal experience through ethical, human-centered, and AI-driven innovation, integrating
-      frontier agentic AI systems, cognitive science, computational social science, and
-      interdisciplinary humanities.
-    </p>
-    <div class="grid grid-cols-3 gap-6 max-w-md mx-auto">
-      <div>
-        <p class="text-2xl font-serif font-bold text-white counter" data-count="5">0</p>
-        <p class="text-xs text-slate-400 mt-1">Research Tracks</p>
-      </div>
-      <div>
-        <p class="text-2xl font-serif font-bold text-white">CSHS</p>
-        <p class="text-xs text-slate-400 mt-1">College of Sciences &amp; Human Studies</p>
-      </div>
-      <div>
-        <p class="text-2xl font-serif font-bold text-white counter" data-count="2030">0</p>
-        <p class="text-xs text-slate-400 mt-1">Vision Aligned</p>
-      </div>
+    <div class="max-w-[820px] mx-auto px-6 sm:px-0">
+      <p class="text-slate-300 text-[16px] sm:text-[17px] leading-[1.75] mb-4 text-justify text-pretty">
+        The Center for Cognitive Intelligence and AI Systems (CIAS) at Prince Mohammed Bin Fahd
+        University (PMU) is an international research and innovation hub dedicated to advancing
+        Human-AI Institutional Development in Higher Education, aligned with Saudi&nbsp;Arabia's Vision 2030.
+      </p>
+      <p class="text-slate-300 text-[16px] sm:text-[17px] leading-[1.75] mb-8 text-justify">
+        CIAS brings together researchers from across the world to collaboratively enhance the human
+        and societal experience through ethical, human-centered, and AI-driven innovation, integrating
+        frontier agentic AI systems, cognitive science, computational social science, and
+        interdisciplinary&nbsp;<span class="ml-2 inline-block">humanities.</span>
+      </p>
     </div>
     <a href="about.html" class="btn-pop inline-block mt-8 px-6 py-3 rounded-full bg-brand-orange text-navy-950 font-semibold hover:bg-orange-400 transition">Learn More About CIAS</a>
   </div>
@@ -483,36 +566,36 @@
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d1">
-        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><path d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/><path d="M10 18h4M11 21h2"/></svg>
+        <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style="--glow: rgba(251,191,36,.6); background: linear-gradient(135deg, #f5820e 0%, #fbbf24 100%);">
+          <svg class="w-8 h-8 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><path d="M9.5 3a5 5 0 00-3 9c.5 1 .5 2 .5 3h6c0-1 0-2 .5-3a5 5 0 00-4-9z"/><path d="M10 18h4M11 21h2"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Cognitive Intelligence &amp; Inclusive Learning</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Enhancing educational access through AI-driven adaptive systems for diverse and marginalized populations.</p>
       </div>
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d2">
-        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><circle cx="8" cy="12" r="3.2"/><circle cx="16" cy="12" r="3.2"/><path d="M11.2 12h1.6"/></svg>
+        <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style="--glow: rgba(244,63,94,.6); background: linear-gradient(135deg, #f5820e 0%, #f43f5e 100%);">
+          <svg class="w-8 h-8 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><circle cx="8" cy="12" r="3.2"/><circle cx="16" cy="12" r="3.2"/><path d="M11.2 12h1.6"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Social Dynamics &amp; Elicitive Learning</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Examining AI, ethics, culture, religion, and language in the context of Saudi Vision 2030.</p>
       </div>
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d3">
-        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><path d="M20.8 8.6c0 4.4-8.8 9.4-8.8 9.4S3.2 13 3.2 8.6a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/><path d="M6 11h2.3l1.4-2.8 2 5.6 1.3-2.8H16"/></svg>
+        <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style="--glow: rgba(56,189,248,.6); background: linear-gradient(135deg, #f5820e 0%, #38bdf8 100%);">
+          <svg class="w-8 h-8 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><path d="M20.8 8.6c0 4.4-8.8 9.4-8.8 9.4S3.2 13 3.2 8.6a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/><path d="M6 11h2.3l1.4-2.8 2 5.6 1.3-2.8H16"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">AI Integration in Education &amp; Healthcare</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Pioneering agentic AI systems for educational governance and precision healthcare.</p>
       </div>
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d4">
-        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><path d="M4 19V5M4 19h16M8 19v-6M12 19v-9M16 19v-4"/></svg>
+        <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style="--glow: rgba(168,85,247,.6); background: linear-gradient(135deg, #f5820e 0%, #a855f7 100%);">
+          <svg class="w-8 h-8 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><path d="M4 19V5M4 19h16M8 19v-6M12 19v-9M16 19v-4"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Mathematical Foundations &amp; Scientific Inquiry</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Advancing the mathematical, statistical, and computational foundations for AI and scientific discovery.</p>
       </div>
       <div class="card card-hover rounded-[30px] p-7 reveal reveal-d5">
-        <div class="w-14 h-14 rounded-xl bg-brand-orange flex items-center justify-center mb-5">
-          <svg class="w-7 h-7 text-slate-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
+        <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style="--glow: rgba(16,185,129,.6); background: linear-gradient(135deg, #f5820e 0%, #10b981 100%);">
+          <svg class="w-8 h-8 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" shape-rendering="geometricPrecision"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
         </div>
         <h3 class="text-white font-semibold text-lg mb-2">Transdisciplinary Humanities &amp; Societal Studies</h3>
         <p class="text-slate-400 text-sm leading-relaxed">Exploring humanities, culture, and social sciences in shaping ethical AI systems.</p>
@@ -671,5 +754,6 @@
     card.addEventListener('mouseleave', () => card.classList.remove('spotlight'));
   });
 </script>
+<script src="js/site-search.js"></script>
 </body>
 </html>

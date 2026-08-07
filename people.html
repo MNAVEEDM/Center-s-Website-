@@ -198,6 +198,16 @@
   .ring-spin-slow { animation: ringSpin 40s linear infinite; }
   .ring-spin-slow-rev { animation: ringSpinRev 55s linear infinite; }
 
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.04); }
+  }
+  .pulse-ring { animation: pulseGlow 4s ease-in-out infinite, ringSpin 30s linear infinite; }
+  .ring-glow-blue { filter: drop-shadow(0 0 16px rgba(56,189,248,.65)); }
+  .ring-glow-gold { filter: drop-shadow(0 0 16px rgba(251,191,36,.65)); }
+  .ring-glow-orange { filter: drop-shadow(0 0 16px rgba(245,130,14,.65)); }
+  .ring-dot { position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 9999px; }
+
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
   .reveal.in-view { opacity: 1; transform: translateY(0); }
   .reveal-d1 { transition-delay: .06s; } .reveal-d2 { transition-delay: .12s; }
@@ -230,14 +240,14 @@
 <header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
   <div class="w-full pl-2 pr-4 lg:pl-3 lg:pr-6 h-[72px] flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-2 shrink-0">
-      <div class="logo-wrap relative w-10 h-10 shrink-0">
-        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-10 h-10 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="w-10 h-10 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+      <div class="logo-wrap relative w-14 h-14 shrink-0">
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="w-14 h-14 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
       </div>
       <div class="leading-tight">
-        <p class="font-serif text-lg text-white font-bold tracking-wide">CIAS</p>
-        <p class="text-[10px] tracking-wide text-brand-blue font-medium">College of Sciences &amp; Human Studies (CSHS)</p>
-        <p class="text-[10px] text-slate-300">Prince Mohammad Bin Fahd University</p>
+        <p class="font-serif text-lg text-brand-orange font-bold tracking-wide">CIAS</p>
+        <p class="text-[12px] sm:text-[13px] tracking-wide text-brand-blue font-semibold">Center for Cognitive Intelligence &amp; AI Systems</p>
+        <p class="text-[11px] sm:text-[12px] text-slate-200 font-medium tracking-wide">Prince Mohammad Bin Fahd University</p>
       </div>
     </a>
 
@@ -261,9 +271,19 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <button class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
-      </button>
+      <div class="relative">
+        <button id="searchBtn" type="button" aria-label="Search" aria-haspopup="true" aria-expanded="false" class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+        </button>
+        <div id="searchPanel" class="hidden absolute right-0 mt-3 w-72 sm:w-80 card rounded-2xl p-3 z-50">
+          <div class="relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+            <input id="searchInput" type="text" placeholder="Search the site..." autocomplete="off"
+              class="w-full bg-black/40 border border-white/10 rounded-lg pl-9 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
+          </div>
+          <ul id="searchResults" class="mt-2 max-h-72 overflow-y-auto space-y-0.5"></ul>
+        </div>
+      </div>
       <button id="menuBtn" class="lg:hidden text-white">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
@@ -301,8 +321,15 @@
     </div>
 
     <div class="relative flex items-center justify-center h-[300px] reveal in-view reveal-d2">
-      <div class="globe-ring w-[300px] h-[300px] ring-spin-slow"></div>
-      <div class="globe-ring w-[340px] h-[340px] opacity-60 ring-spin-slow-rev"></div>
+      <div class="absolute w-[300px] h-[300px] rounded-full border-2 border-dashed border-brand-blue/70 pulse-ring ring-glow-blue">
+        <span class="ring-dot" style="background:#38bdf8; box-shadow:0 0 12px 4px rgba(56,189,248,.9);"></span>
+      </div>
+      <div class="absolute w-[320px] h-[320px] rounded-full border-2 border-brand-gold/60 ring-spin-slow ring-glow-gold">
+        <span class="ring-dot" style="background:#fbbf24; box-shadow:0 0 12px 4px rgba(251,191,36,.9);"></span>
+      </div>
+      <div class="absolute w-[340px] h-[340px] rounded-full border-2 border-dashed border-brand-orange/60 ring-spin-slow-rev ring-glow-orange">
+        <span class="ring-dot" style="background:#f5820e; box-shadow:0 0 12px 4px rgba(245,130,14,.9);"></span>
+      </div>
       <img src="images/final-logo.jpg" alt="CIAS Logo" class="logo-spin w-[260px] h-[260px] rounded-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
       <div class="globe" style="display:none;"></div>
       <div class="absolute -bottom-2 w-64 h-10 rounded-full bg-brand-orange/50 blur-3xl"></div>
@@ -610,6 +637,67 @@
           </div>
         </div>
 
+        <!-- 03 -->
+        <div class="card card-hover rounded-2xl p-4 sm:p-5 reveal reveal-d3">
+          <div class="grid lg:grid-cols-[360px,1fr] gap-5 lg:items-start">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-brand-orange/60 shrink-0">
+                <img src="images/isa Alam Shah Syed.jpeg" alt="Mr. Isa Alam Shah Syed" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-sm" style="display:none;">IS</div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="font-serif text-base text-brand-orange font-semibold leading-tight whitespace-nowrap">Mr. Isa Alam Shah Syed</h3>
+                <p class="text-white text-xs font-medium mt-0.5">Junior Research Affiliate</p>
+                <p class="text-slate-400 text-xs mt-0.5">Electrical Engineering</p>
+                <p class="text-brand-orange text-xs font-semibold leading-snug role-label mt-2 whitespace-nowrap"><svg class="inline-block w-3.5 h-3.5 align-text-bottom mr-1" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 3L4 14h6l-1 7 9-11h-6l1-7z"/></svg>Expertise: Power Systems &amp; AI Sustainability</p>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed lg:pl-5 lg:border-l lg:border-white/10">
+              Isa Alam Shah Syed is an Electrical Engineering student at Prince Mohammad Bin Fahd University. His
+              academic interests mainly focus on power systems, renewable energy, and emerging technologies. He
+              previously conducted research on the sustainability of Artificial Intelligence (AI), while mainly
+              focusing on its effects on education. He is also interested in how electrical engineering can work
+              closely with AI to develop more efficient and sustainable machines. He aims to combine engineering
+              ideas with AI to solve complex problems and develop innovative ideas. Through research, he wants to
+              contribute to advancements in technology and investigate the growing integration of AI in our daily
+              lives. As a Junior Research Affiliate, he is motivated to collaborate with researchers and contribute
+              to meaningful projects. He believes this opportunity will help him expand his knowledge, strengthen
+              his research and analytical skills, and gain valuable research experience that supports his academic
+              and professional growth.
+            </p>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <div class="card card-hover rounded-2xl p-4 sm:p-5 reveal reveal-d4">
+          <div class="grid lg:grid-cols-[360px,1fr] gap-5 lg:items-start">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-brand-blue/60 shrink-0">
+                <img src="images/Mohammed Masbah Uddin.jpeg" alt="Mr. Mohammed Masbah Uddin" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-sm" style="display:none;">MU</div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="font-serif text-base text-brand-orange font-semibold leading-tight whitespace-nowrap">Mr. Mohammed Masbah Uddin</h3>
+                <p class="text-white text-xs font-medium mt-0.5">Junior Research Affiliate</p>
+                <p class="text-slate-400 text-xs mt-0.5">Electrical Engineering</p>
+                <p class="text-brand-orange text-xs font-semibold leading-snug role-label mt-2 whitespace-nowrap"><svg class="inline-block w-3.5 h-3.5 align-text-bottom mr-1" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 00.33 1.82l.05.05a2 2 0 11-2.83 2.83l-.05-.05a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.05.05a2 2 0 11-2.83-2.83l.05-.05a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.05-.05a2 2 0 112.83-2.83l.05.05a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.05-.05a2 2 0 112.83 2.83l-.05.05a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Expertise: Power Systems &amp; Electrical Machines</p>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed lg:pl-5 lg:border-l lg:border-white/10">
+              Mohammed Masbah Uddin is an Electrical Engineering student who will soon resume his sophomore year at
+              Prince Mohammad Bin Fahd University. He has an interest in power systems as well as electrical
+              machines, and in how Artificial Intelligence (AI) can be integrated to improve the efficiency of
+              electrical systems by developing creative innovations for solving complex problems. He previously
+              worked on a research project where he and his colleagues researched the relationship between AI and
+              sustainability, focusing on its impact on education. He believes that being a Junior Research
+              Affiliate will help him build up his critical skills, expand his knowledge, and gain research
+              experience that will come in handy for conducting further complex and challenging research projects,
+              as well as help him develop his academic growth. He also believes that the skills he develops will
+              come in handy for his professional career.
+            </p>
+          </div>
+        </div>
+
       </div>
 
       <div class="card rounded-2xl p-6 sm:p-8 reveal">
@@ -625,10 +713,6 @@
           <li class="flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-2">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0"></span>
             <span class="text-slate-200 text-sm">Miss Nadegda Albaraay</span>
-          </li>
-          <li class="flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-2">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0"></span>
-            <span class="text-slate-200 text-sm">Mr. Isa Alam Shah Syed</span>
           </li>
           <li class="flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-2">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0"></span>
@@ -770,6 +854,12 @@
     });
   });
 
+  const tabFromHash = (window.location.hash || '').replace('#', '');
+  if (tabFromHash) {
+    const targetTab = document.querySelector(`.people-tab[data-people-tab="${tabFromHash}"]`);
+    if (targetTab) targetTab.click();
+  }
+
   const revealEls = document.querySelectorAll('.reveal');
   const revealIO = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -788,5 +878,6 @@
     card.addEventListener('mouseleave', () => card.classList.remove('spotlight'));
   });
 </script>
+<script src="js/site-search.js"></script>
 </body>
 </html>
