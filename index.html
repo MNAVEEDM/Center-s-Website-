@@ -24,8 +24,21 @@
   };
 </script>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
   html { scroll-behavior: smooth; }
   body { font-family: 'Zalando Sans', sans-serif; background-color: transparent; }
+
+  .pmu-wordmark {
+    font-family: 'Playfair Display', 'EB Garamond', serif;
+    font-weight: 700;
+    font-size: clamp(20px, 1.8vw, 28px);
+    letter-spacing: 3px;
+    color: #f5820e;
+    text-transform: uppercase;
+    line-height: 1;
+    font-style: normal;
+    margin-left: 10px;
+  }
 
   .bg-glow {
     background:
@@ -437,7 +450,7 @@
           <ul id="searchResults" class="mt-2 max-h-72 overflow-y-auto space-y-0.5"></ul>
         </div>
       </div>
-      <button id="menuBtn" class="lg:hidden text-white">
+      <button id="menuBtn" class="text-white">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
@@ -446,7 +459,7 @@
     </div>
 
 
-  <div id="mobileMenu" class="hidden lg:hidden bg-navy-900 border-t border-white/5 px-5 py-4 space-y-3 text-sm">
+  <div id="mobileMenu" class="hidden bg-navy-900 border-t border-white/5 px-5 py-4 space-y-3 text-sm">
     <a href="#home" class="block py-1 text-brand-orange">Home</a>
     <a href="about.html" class="block py-1">About</a>
     <a href="#research" class="block py-1">Research</a>
@@ -573,50 +586,9 @@
 <section class="px-5 lg:px-8 pb-20">
   <div class="max-w-7xl mx-auto text-center">
     <div class="flex items-center justify-center gap-4 mb-4 reveal">
-      <span class="h-px w-16 bg-brand-blue/50"></span>
       <h2 class="font-serif text-2xl sm:text-3xl text-white font-semibold">In Alignment with Saudi Vision 2030</h2>
-      <span class="h-px w-16 bg-brand-blue/50"></span>
     </div>
     <p class="text-slate-400 text-sm mb-14 reveal reveal-d1">CIAS's work is anchored in the core pillars that define the Kingdom's transformation journey.</p>
-
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d1">
-        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(244,63,94,.6); background: linear-gradient(135deg, #f5820e 0%, #f43f5e 100%);">
-          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="7" r="2.6"/><circle cx="5" cy="9" r="2.1"/><circle cx="19" cy="9" r="2.1"/><path stroke-linecap="round" stroke-linejoin="round" d="M6.5 20v-1.5c0-2.5 2.2-4 5.5-4s5.5 1.5 5.5 4V20"/><path stroke-linecap="round" stroke-linejoin="round" d="M2 19.5v-1c0-2 1.7-3.2 3.8-3.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M22 19.5v-1c0-2-1.7-3.2-3.8-3.4"/></svg>
-        </div>
-        <h4 class="text-white font-semibold text-sm">A Vibrant Society</h4>
-      </div>
-      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d2">
-        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(56,189,248,.6); background: linear-gradient(135deg, #f5820e 0%, #38bdf8 100%);">
-          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-5 4 4 8-8M20 8V4h-4"/></svg>
-        </div>
-        <h4 class="text-white font-semibold text-sm">A Thriving Economy</h4>
-      </div>
-      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d3">
-        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(168,85,247,.6); background: linear-gradient(135deg, #f5820e 0%, #a855f7 100%);">
-          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2L3 21h18L12 2z"/><path stroke-linecap="round" d="M12 10v6"/></svg>
-        </div>
-        <h4 class="text-white font-semibold text-sm">An Ambitious Nation</h4>
-      </div>
-      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d4">
-        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(16,185,129,.6); background: linear-gradient(135deg, #f5820e 0%, #10b981 100%);">
-          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>
-        </div>
-        <h4 class="text-white font-semibold text-sm">A Responsible Nation</h4>
-      </div>
-      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d5">
-        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(251,191,36,.6); background: linear-gradient(135deg, #f5820e 0%, #fbbf24 100%);">
-          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </div>
-        <h4 class="text-white font-semibold text-sm">A Forward Nation</h4>
-      </div>
-      <div class="pillar-chip card rounded-[30px] p-6 flex flex-col items-center gap-3 reveal reveal-d6">
-        <div class="icon-box w-14 h-14 rounded-2xl flex items-center justify-center" style="--glow: rgba(6,182,212,.6); background: linear-gradient(135deg, #f5820e 0%, #06b6d4 100%);">
-          <svg class="w-7 h-7 text-white" fill="rgba(255,255,255,.2)" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>
-        </div>
-        <h4 class="text-white font-semibold text-sm">An Encompassing Nation</h4>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -698,7 +670,7 @@
 </section>
 
 <!-- ============ FOOTER ============ -->
-<footer class="relative border-t border-white/5 bg-navy-950 px-5 lg:px-8 pt-14 pb-8">
+<footer class="relative border-t border-white/5 bg-navy-950 px-5 lg:px-8 pt-14 pb-8" style="background-image: linear-gradient(rgba(4,8,20,0.88), rgba(4,8,20,0.88)), url('images/footer upadted.jpeg'); background-size: cover; background-position: center;">
   <div class="max-w-7xl mx-auto">
     <div class="grid lg:grid-cols-[300px,1fr] gap-10 lg:gap-16 pb-10 border-b border-white/10">
       <div>
@@ -755,22 +727,25 @@
     </div>
 
     <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-5 pt-6">
-      <div class="flex gap-3">
-        <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 3h-2a4 4 0 00-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-        </a>
-        <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M7 10v7M7 7v.01M11 17v-4.5c0-1.5 1-2.5 2.5-2.5S16 11 16 12.5V17M11 12.5V17"/></svg>
-        </a>
-        <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10.3 9.6l5 2.4-5 2.4V9.6z" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
-        </a>
-        <a href="#" aria-label="Twitter/X" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l16 16M20 4L4 20"/></svg>
-        </a>
+      <div class="flex items-center gap-6">
+        <div class="flex gap-3">
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 3h-2a4 4 0 00-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M7 10v7M7 7v.01M11 17v-4.5c0-1.5 1-2.5 2.5-2.5S16 11 16 12.5V17M11 12.5V17"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10.3 9.6l5 2.4-5 2.4V9.6z" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter/X" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l16 16M20 4L4 20"/></svg>
+          </a>
+        </div>
+        <span class="pmu-wordmark">PMU</span>
       </div>
       <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-4 text-xs text-slate-500 text-center">
         <p>&copy; 2026 Center for Cognitive Intelligence and AI Systems. All rights reserved.</p>
