@@ -108,7 +108,7 @@
 
   .nav-link {
     position: relative;
-    padding: .55rem 1rem;
+    padding: .48rem .95rem;
     border-radius: 9999px;
     white-space: nowrap;
     transition: color .2s ease, background-color .2s ease, box-shadow .2s ease;
@@ -122,12 +122,21 @@
 
   /* ---- Modern floating navbar ---- */
   #siteHeader {
-    transition: background-color .35s ease, box-shadow .35s ease, border-color .35s ease, padding .35s ease;
+    background:
+      radial-gradient(ellipse 560px 320px at 0% 0%, rgba(245,130,14,0.42), transparent 68%),
+      radial-gradient(ellipse 560px 320px at 100% 0%, rgba(56,189,248,0.36), transparent 68%),
+      rgba(5,9,20,.66);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    transition: background .35s ease, box-shadow .35s ease, border-color .35s ease, padding .35s ease, backdrop-filter .35s ease;
   }
   #siteHeader.scrolled {
-    background-color: rgba(5,9,20,.82);
-    backdrop-filter: blur(22px) saturate(180%);
-    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    background:
+      radial-gradient(ellipse 560px 320px at 0% 0%, rgba(245,130,14,0.34), transparent 68%),
+      radial-gradient(ellipse 560px 320px at 100% 0%, rgba(56,189,248,0.3), transparent 68%),
+      rgba(5,9,20,.9);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     box-shadow: 0 10px 30px rgba(0,0,0,.35);
     border-bottom-color: rgba(255,255,255,.1);
   }
@@ -185,6 +194,16 @@
   .people-panel.active { display: block; animation: fadeInUp .5s ease both; }
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
+  /* ---- Revolving profile photo strip (Our People tab) ---- */
+  .marquee-wrap {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+  .marquee-track { display: flex; gap: 1.5rem; width: max-content; animation: marquee 30s linear infinite; }
+  .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
   /* ---- Quote marks ---- */
   .quote-mark { font-family: 'Zalando Sans', sans-serif; line-height: 1; }
 
@@ -237,21 +256,22 @@
 <div class="app-bg" aria-hidden="true"></div>
 
 <!-- ============ NAVBAR ============ -->
-<header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
-  <div class="w-full pl-2 pr-4 lg:pl-3 lg:pr-6 h-[72px] flex items-center justify-between">
-    <a href="index.html" class="flex items-center gap-2 shrink-0">
-      <div class="logo-wrap relative w-14 h-14 shrink-0">
-        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="w-14 h-14 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
-      </div>
-      <div class="leading-tight">
-        <p class="font-serif text-lg text-brand-orange font-bold tracking-wide">CIAS</p>
-        <p class="text-[12px] sm:text-[13px] tracking-wide text-brand-blue font-semibold">Center for Cognitive Intelligence &amp; AI Systems</p>
-        <p class="text-[11px] sm:text-[12px] text-slate-200 font-medium tracking-wide">Prince Mohammad Bin Fahd University</p>
-      </div>
-    </a>
+<header id="siteHeader" class="fixed top-0 inset-x-0 z-50 border-b border-white/5">
+  <div class="w-full pl-1 pr-4 lg:pl-2 lg:pr-8">
+    <div class="flex items-center justify-between h-[70px] lg:h-[86px]">
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <div class="logo-wrap relative w-16 h-16 lg:w-[78px] lg:h-[78px] shrink-0">
+          <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-16 h-16 lg:w-[78px] lg:h-[78px] rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="w-16 h-16 lg:w-[78px] lg:h-[78px] rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+        </div>
+        <div class="leading-tight">
+          <p class="font-serif text-base lg:text-lg text-brand-orange font-bold tracking-wide">CIAS</p>
+          <p class="text-[11px] lg:text-xs tracking-wide text-brand-blue font-semibold">Center for Cognitive Intelligence &amp; AI Systems</p>
+          <p class="text-[10px] lg:text-[11px] text-slate-200 font-medium tracking-wide">Prince Mohammad Bin Fahd University</p>
+        </div>
+      </a>
 
-    <nav class="hidden lg:flex flex-1 items-center justify-start gap-3 ml-8 text-sm font-medium text-slate-200">
+      <nav class="hidden lg:flex flex-1 items-center justify-center gap-1 text-sm font-medium text-slate-200">
       <a href="index.html#home" class="nav-link">Home</a>
       <a href="about.html" class="nav-link">About</a>
       <div class="relative group before:content-[''] before:absolute before:left-0 before:top-full before:w-48 before:h-3">
@@ -268,27 +288,32 @@
       <a href="news.html" class="nav-link">News &amp; Events</a>
       <a href="collaborations.html" class="nav-link">Collaborations</a>
       <a href="contact.html" class="nav-link">Contact</a>
-    </nav>
+      </nav>
 
-    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4">
       <div class="relative">
-        <button id="searchBtn" type="button" aria-label="Search" aria-haspopup="true" aria-expanded="false" class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
+        <button id="searchBtn" type="button" aria-label="Search" aria-haspopup="true" aria-expanded="false" class="w-8 h-8 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
         </button>
-        <div id="searchPanel" class="hidden absolute right-0 mt-3 w-72 sm:w-80 card rounded-2xl p-3 z-50">
+        <div id="searchPanel" class="hidden absolute right-0 top-full mt-3 w-72 sm:w-80 card rounded-2xl p-3 z-50">
           <div class="relative">
-            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+            <div class="absolute left-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border border-brand-orange/60 bg-navy-950 flex items-center justify-center text-brand-orange">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+            </div>
             <input id="searchInput" type="text" placeholder="Search the site..." autocomplete="off"
-              class="w-full bg-black/40 border border-white/10 rounded-lg pl-9 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
+              class="w-full bg-black/40 border border-white/10 rounded-lg pl-10 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
           </div>
           <ul id="searchResults" class="mt-2 max-h-72 overflow-y-auto space-y-0.5"></ul>
         </div>
       </div>
       <button id="menuBtn" class="lg:hidden text-white">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
-  </div>
+    </div>
+
+    </div>
+
 
   <div id="mobileMenu" class="hidden lg:hidden bg-navy-900 border-t border-white/5 px-5 py-4 space-y-3 text-sm">
     <a href="index.html#home" class="block py-1">Home</a>
@@ -302,37 +327,40 @@
 </header>
 
 <!-- ============ PEOPLE HERO ============ -->
-<section class="relative dot-grid hero-photo pt-40 pb-14 overflow-hidden" style="background-image: linear-gradient(180deg, rgba(5,9,20,0.55) 0%, rgba(10,18,48,0.72) 60%, rgba(10,18,48,0.85) 100%), url('images/fix background.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-  <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-2 gap-14 items-center relative z-10">
-    <div class="reveal in-view">
-      <h1 class="font-serif font-extrabold text-4xl sm:text-5xl text-white">Our <span class="text-brand-orange">People</span></h1>
-      <div class="w-20 h-1 bg-brand-orange rounded-full my-6"></div>
-      <p class="text-slate-300 text-lg leading-relaxed max-w-xl">
-        Meet the leadership, researchers, and collaborators driving CIAS's mission across
-        five interconnected research tracks.
-      </p>
+<section class="relative dot-grid hero-photo pt-24 lg:pt-36 pb-14 overflow-hidden" style="background-image: linear-gradient(180deg, rgba(5,9,20,0.4) 0%, rgba(10,18,48,0.6) 55%, rgba(10,18,48,0.82) 100%), url('images/hero-bg.jpg'); background-size: cover; background-position: center 20%; background-repeat: no-repeat;">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+      <div class="reveal in-view">
+        <h1 class="font-serif font-extrabold text-4xl sm:text-5xl text-white">Our <span class="text-brand-orange">People</span></h1>
+        <div class="w-20 h-1 bg-brand-orange rounded-full my-6"></div>
+        <p class="text-slate-300 text-lg leading-relaxed max-w-xl">
+          Meet the leadership, researchers, and collaborators driving CIAS's mission across
+          five interconnected research tracks.
+        </p>
+      </div>
 
-      <div class="flex flex-wrap gap-8 mt-10 border-b border-white/10">
-        <button class="people-tab active" data-people-tab="leaders">Track Leaders</button>
-        <button class="people-tab" data-people-tab="senior">Senior Affiliates</button>
-        <button class="people-tab" data-people-tab="junior">Junior Affiliates</button>
-        <button class="people-tab" data-people-tab="external">External Affiliates</button>
+      <div class="relative flex items-center justify-center h-[300px] reveal in-view reveal-d2">
+        <div class="absolute w-[300px] h-[300px] rounded-full border-2 border-dashed border-brand-blue/70 pulse-ring ring-glow-blue">
+          <span class="ring-dot" style="background:#38bdf8; box-shadow:0 0 12px 4px rgba(56,189,248,.9);"></span>
+        </div>
+        <div class="absolute w-[320px] h-[320px] rounded-full border-2 border-brand-gold/60 ring-spin-slow ring-glow-gold">
+          <span class="ring-dot" style="background:#fbbf24; box-shadow:0 0 12px 4px rgba(251,191,36,.9);"></span>
+        </div>
+        <div class="absolute w-[340px] h-[340px] rounded-full border-2 border-dashed border-brand-orange/60 ring-spin-slow-rev ring-glow-orange">
+          <span class="ring-dot" style="background:#f5820e; box-shadow:0 0 12px 4px rgba(245,130,14,.9);"></span>
+        </div>
+        <img src="images/final-logo.jpg" alt="CIAS Logo" class="logo-spin w-[260px] h-[260px] rounded-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="globe" style="display:none;"></div>
+        <div class="absolute -bottom-2 w-64 h-10 rounded-full bg-brand-orange/50 blur-3xl"></div>
       </div>
     </div>
 
-    <div class="relative flex items-center justify-center h-[300px] reveal in-view reveal-d2">
-      <div class="absolute w-[300px] h-[300px] rounded-full border-2 border-dashed border-brand-blue/70 pulse-ring ring-glow-blue">
-        <span class="ring-dot" style="background:#38bdf8; box-shadow:0 0 12px 4px rgba(56,189,248,.9);"></span>
-      </div>
-      <div class="absolute w-[320px] h-[320px] rounded-full border-2 border-brand-gold/60 ring-spin-slow ring-glow-gold">
-        <span class="ring-dot" style="background:#fbbf24; box-shadow:0 0 12px 4px rgba(251,191,36,.9);"></span>
-      </div>
-      <div class="absolute w-[340px] h-[340px] rounded-full border-2 border-dashed border-brand-orange/60 ring-spin-slow-rev ring-glow-orange">
-        <span class="ring-dot" style="background:#f5820e; box-shadow:0 0 12px 4px rgba(245,130,14,.9);"></span>
-      </div>
-      <img src="images/final-logo.jpg" alt="CIAS Logo" class="logo-spin w-[260px] h-[260px] rounded-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-      <div class="globe" style="display:none;"></div>
-      <div class="absolute -bottom-2 w-64 h-10 rounded-full bg-brand-orange/50 blur-3xl"></div>
+    <div class="flex flex-wrap gap-6 sm:gap-8 mt-12 border-b border-white/10 reveal in-view reveal-d3">
+      <button class="people-tab active" data-people-tab="our">Our People</button>
+      <button class="people-tab" data-people-tab="leaders">Track Leaders</button>
+      <button class="people-tab" data-people-tab="senior">Senior Affiliates</button>
+      <button class="people-tab" data-people-tab="junior">Junior Affiliates</button>
+      <button class="people-tab" data-people-tab="external">External Affiliates</button>
     </div>
   </div>
 </section>
@@ -341,8 +369,144 @@
 <section class="px-5 lg:px-8 pb-24 pt-10">
   <div class="max-w-7xl mx-auto">
 
+    <!-- ===== Our People (welcome messages) ===== -->
+    <div class="people-panel active" id="people-our">
+      <div class="marquee-wrap reveal mb-10">
+        <div class="marquee-track">
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/dean-ashraf.png" alt="Dr. Muhammad Waqar Ashraf" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/leader-1.jpg" alt="Dr. Arifi Noman Mohammed Waked" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/leader-2.jpg" alt="Dr. Jose P. Cerin" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/leader-3.jpg" alt="Dr. Alia Amir" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/leader-4.jpg" alt="Dr. Najma Saleem" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/leader-5.jpg" alt="Dr. Edyta Wolny-Ibrahim" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/siddiqua.jpg" alt="Dr. Siddiqua Aamir" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/dr dilsad.jpg" alt="Dr. Dilsad Ahmed" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/kelechukwu.jpg" alt="Dr. Kelechukwu Ihemere" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/Alaa.jpeg" alt="Mr. Alaa Alhasawi" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/hamed.jpeg" alt="Mr. Hamed Alghamdi" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/isa Alam Shah Syed.jpeg" alt="Mr. Isa Alam Shah Syed" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3">
+            <img src="images/Mohammed Masbah Uddin.jpeg" alt="Mr. Mohammed Masbah Uddin" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <!-- duplicate set for a seamless loop -->
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/dean-ashraf.png" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/leader-1.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/leader-2.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/leader-3.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/leader-4.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/leader-5.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/siddiqua.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/dr dilsad.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/kelechukwu.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/Alaa.jpeg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/hamed.jpeg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/isa Alam Shah Syed.jpeg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
+          </div>
+          <div class="card rounded-xl h-28 w-24 shrink-0 flex flex-col items-center justify-center gap-2 px-2 py-3" aria-hidden="true">
+            <img src="images/Mohammed Masbah Uddin.jpeg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+
+        <!-- Dean -->
+        <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d1">
+          <div class="grid lg:grid-cols-[360px,1fr] gap-5 lg:items-start">
+            <div class="flex items-start gap-4">
+              <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-blue/60 shrink-0">
+                <img src="images/dean-ashraf.png" alt="Dr. Muhammad Waqar Ashraf" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-sm" style="display:none;">MA</div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="font-serif text-base text-brand-orange font-semibold leading-tight whitespace-nowrap">Dr. Muhammad Waqar Ashraf</h3>
+                <p class="text-white text-xs font-medium mt-0.5">Dean, College of Sciences &amp; Human Studies, PMU</p>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed lg:pl-5 lg:border-l lg:border-white/10">
+              The Center for Cognitive Intelligence and AI Systems represents a transformative step toward
+              reimagining research and education at PMU. By bringing together diverse disciplines, CIAS fosters
+              innovation that is ethical, inclusive, and globally relevant. Our commitment is to support high-impact
+              research, strengthen academic excellence, and ensure that AI integration meaningfully contributes to
+              societal development, knowledge creation, and sustainable academic leadership.
+            </p>
+          </div>
+        </div>
+
+        <!-- Research Center Lead -->
+        <div class="card card-hover rounded-2xl p-5 sm:p-6 reveal reveal-d2">
+          <div class="grid lg:grid-cols-[360px,1fr] gap-5 lg:items-start">
+            <div class="flex items-start gap-4">
+              <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-brand-orange/60 shrink-0">
+                <img src="images/leader-1.jpg" alt="Dr. Arifi Noman Mohammed Waked" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="w-full h-full avatar items-center justify-center text-white font-serif font-bold text-sm" style="display:none;">AW</div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="font-serif text-base text-brand-orange font-semibold leading-tight whitespace-nowrap">Dr. Arifi Noman Mohammed Waked</h3>
+                <p class="text-white text-xs font-medium mt-0.5">Research Center Lead</p>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed lg:pl-5 lg:border-l lg:border-white/10">
+              At CIAS, we strive to enhance the ethical use of artificial intelligence to strengthen human-centered
+              research and innovation across the numerous fields within the cognitive sciences. We aim to promote
+              sustainable changes benefiting people of all demographics throughout the processes of social evolution
+              and the ever-increasing role of AI-driven technology in human experiences.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- ===== Track Leaders (VP, Dean, Center Lead) ===== -->
-    <div class="people-panel active" id="people-leaders">
+    <div class="people-panel" id="people-leaders">
       <div class="space-y-6">
 
         <!-- Track Lead -->

@@ -106,7 +106,7 @@
 
   .nav-link {
     position: relative;
-    padding: .55rem 1rem;
+    padding: .48rem .95rem;
     border-radius: 9999px;
     white-space: nowrap;
     transition: color .2s ease, background-color .2s ease, box-shadow .2s ease;
@@ -120,12 +120,21 @@
 
   /* ---- Modern floating navbar ---- */
   #siteHeader {
-    transition: background-color .35s ease, box-shadow .35s ease, border-color .35s ease, padding .35s ease;
+    background:
+      radial-gradient(ellipse 560px 320px at 0% 0%, rgba(245,130,14,0.42), transparent 68%),
+      radial-gradient(ellipse 560px 320px at 100% 0%, rgba(56,189,248,0.36), transparent 68%),
+      rgba(5,9,20,.66);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    transition: background .35s ease, box-shadow .35s ease, border-color .35s ease, padding .35s ease, backdrop-filter .35s ease;
   }
   #siteHeader.scrolled {
-    background-color: rgba(5,9,20,.82);
-    backdrop-filter: blur(22px) saturate(180%);
-    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    background:
+      radial-gradient(ellipse 560px 320px at 0% 0%, rgba(245,130,14,0.34), transparent 68%),
+      radial-gradient(ellipse 560px 320px at 100% 0%, rgba(56,189,248,0.3), transparent 68%),
+      rgba(5,9,20,.9);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     box-shadow: 0 10px 30px rgba(0,0,0,.35);
     border-bottom-color: rgba(255,255,255,.1);
   }
@@ -164,21 +173,22 @@
 <div class="app-bg" aria-hidden="true"></div>
 
 <!-- ============ NAVBAR ============ -->
-<header id="siteHeader" class="fixed top-0 inset-x-0 z-50 bg-navy-950/90 backdrop-blur border-b border-white/5">
-  <div class="w-full pl-2 pr-4 lg:pl-3 lg:pr-6 h-[72px] flex items-center justify-between">
-    <a href="index.html" class="flex items-center gap-2 shrink-0">
-      <div class="logo-wrap relative w-14 h-14 shrink-0">
-        <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="w-14 h-14 rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
-      </div>
-      <div class="leading-tight">
-        <p class="font-serif text-lg text-brand-orange font-bold tracking-wide">CIAS</p>
-        <p class="text-[12px] sm:text-[13px] tracking-wide text-brand-blue font-semibold">Center for Cognitive Intelligence &amp; AI Systems</p>
-        <p class="text-[11px] sm:text-[12px] text-slate-200 font-medium tracking-wide">Prince Mohammad Bin Fahd University</p>
-      </div>
-    </a>
+<header id="siteHeader" class="fixed top-0 inset-x-0 z-50 border-b border-white/5">
+  <div class="w-full pl-1 pr-4 lg:pl-2 lg:pr-8">
+    <div class="flex items-center justify-between h-[70px] lg:h-[86px]">
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <div class="logo-wrap relative w-16 h-16 lg:w-[78px] lg:h-[78px] shrink-0">
+          <img src="images/final-logo.jpg" alt="CIAS Logo" class="w-16 h-16 lg:w-[78px] lg:h-[78px] rounded-full object-cover ring-2 ring-brand-orange/70" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="w-16 h-16 lg:w-[78px] lg:h-[78px] rounded-full ring-2 ring-brand-orange/70 items-center justify-center text-brand-orange font-serif font-bold text-sm" style="display:none;">PMU</div>
+        </div>
+        <div class="leading-tight">
+          <p class="font-serif text-base lg:text-lg text-brand-orange font-bold tracking-wide">CIAS</p>
+          <p class="text-[11px] lg:text-xs tracking-wide text-brand-blue font-semibold">Center for Cognitive Intelligence &amp; AI Systems</p>
+          <p class="text-[10px] lg:text-[11px] text-slate-200 font-medium tracking-wide">Prince Mohammad Bin Fahd University</p>
+        </div>
+      </a>
 
-    <nav class="hidden lg:flex flex-1 items-center justify-start gap-3 ml-8 text-sm font-medium text-slate-200">
+      <nav class="hidden lg:flex flex-1 items-center justify-center gap-1 text-sm font-medium text-slate-200">
       <a href="index.html#home" class="nav-link">Home</a>
       <a href="about.html" class="nav-link">About</a>
       <div class="relative group before:content-[''] before:absolute before:left-0 before:top-full before:w-48 before:h-3">
@@ -195,27 +205,32 @@
       <a href="news.html" class="nav-link">News &amp; Events</a>
       <a href="collaborations.html" class="nav-link">Collaborations</a>
       <a href="contact.html" class="nav-link active">Contact</a>
-    </nav>
+      </nav>
 
-    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4">
       <div class="relative">
-        <button id="searchBtn" type="button" aria-label="Search" aria-haspopup="true" aria-expanded="false" class="w-9 h-9 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
+        <button id="searchBtn" type="button" aria-label="Search" aria-haspopup="true" aria-expanded="false" class="w-8 h-8 rounded-full border border-brand-orange/60 flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-navy-950 hover:scale-110 transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
         </button>
-        <div id="searchPanel" class="hidden absolute right-0 mt-3 w-72 sm:w-80 card rounded-2xl p-3 z-50">
+        <div id="searchPanel" class="hidden absolute right-0 top-full mt-3 w-72 sm:w-80 card rounded-2xl p-3 z-50">
           <div class="relative">
-            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+            <div class="absolute left-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border border-brand-orange/60 bg-navy-950 flex items-center justify-center text-brand-orange">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+            </div>
             <input id="searchInput" type="text" placeholder="Search the site..." autocomplete="off"
-              class="w-full bg-black/40 border border-white/10 rounded-lg pl-9 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
+              class="w-full bg-black/40 border border-white/10 rounded-lg pl-10 pr-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-orange transition" />
           </div>
           <ul id="searchResults" class="mt-2 max-h-72 overflow-y-auto space-y-0.5"></ul>
         </div>
       </div>
       <button id="menuBtn" class="lg:hidden text-white">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
-  </div>
+    </div>
+
+    </div>
+
 
   <div id="mobileMenu" class="hidden lg:hidden bg-navy-900 border-t border-white/5 px-5 py-4 space-y-3 text-sm">
     <a href="index.html#home" class="block py-1">Home</a>
@@ -229,7 +244,7 @@
 </header>
 
 <!-- ============ CONTACT ============ -->
-<section class="relative dot-grid hero-photo pt-40 pb-24 px-5 lg:px-8 overflow-hidden" style="background-image: linear-gradient(180deg, rgba(5,9,20,0.55) 0%, rgba(10,18,48,0.72) 60%, rgba(10,18,48,0.85) 100%), url('images/fix background.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<section class="relative dot-grid hero-photo pt-24 lg:pt-36 pb-24 px-5 lg:px-8 overflow-hidden" style="background-image: linear-gradient(180deg, rgba(5,9,20,0.55) 0%, rgba(10,18,48,0.72) 60%, rgba(10,18,48,0.85) 100%), url('images/fix background.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
   <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 relative z-10">
     <div class="reveal in-view">
       <p class="text-white font-bold tracking-wide text-sm mb-2">GET IN TOUCH</p>
