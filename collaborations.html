@@ -25,27 +25,57 @@
   };
 </script>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
   html { scroll-behavior: smooth; }
   body { font-family: 'Zalando Sans', sans-serif; background-color: transparent; }
+
+  .pmu-wordmark {
+    font-family: 'Playfair Display', 'EB Garamond', serif;
+    font-weight: 700;
+    font-size: clamp(30px, 3.4vw, 48px);
+    letter-spacing: 5px;
+    color: #f5820e;
+    text-transform: uppercase;
+    line-height: 1;
+    font-style: normal;
+    display: inline-block;
+    transform: translateY(-0.07em); /* optical centring */
+  }
 
   .app-bg {
     position: fixed;
     inset: 0;
     z-index: -1;
     background-image:
-      radial-gradient(ellipse 750px 600px at 8% 8%, rgba(245,130,14,0.42), transparent 62%),
-      radial-gradient(ellipse 850px 700px at 95% 12%, rgba(56,189,248,0.32), transparent 58%),
-      radial-gradient(ellipse 700px 600px at 12% 48%, rgba(56,189,248,0.28), transparent 58%),
-      radial-gradient(ellipse 800px 700px at 92% 55%, rgba(251,191,36,0.3), transparent 58%),
-      radial-gradient(ellipse 850px 700px at 18% 92%, rgba(245,130,14,0.34), transparent 58%),
-      radial-gradient(ellipse 800px 650px at 98% 96%, rgba(56,189,248,0.28), transparent 58%),
-      linear-gradient(180deg, rgba(5,9,20,0.6) 0%, rgba(10,18,48,0.78) 100%),
+      radial-gradient(ellipse 750px 600px at 8% 8%, rgba(245,130,14,0.5), transparent 62%),
+      radial-gradient(ellipse 850px 700px at 95% 12%, rgba(56,189,248,0.4), transparent 58%),
+      radial-gradient(ellipse 700px 600px at 12% 48%, rgba(56,189,248,0.36), transparent 58%),
+      radial-gradient(ellipse 800px 700px at 92% 55%, rgba(251,191,36,0.38), transparent 58%),
+      radial-gradient(ellipse 850px 700px at 18% 92%, rgba(245,130,14,0.42), transparent 58%),
+      radial-gradient(ellipse 800px 650px at 98% 96%, rgba(56,189,248,0.36), transparent 58%),
+      linear-gradient(180deg, rgba(5,9,20,0.38) 0%, rgba(10,18,48,0.56) 100%),
       url('images/background.jpg');
     background-size: auto, auto, auto, auto, auto, auto, auto, cover;
     background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, center;
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
+
+  .pmu-nav-logo {
+    display: block;
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .pmu-nav-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.12);
+  }
+  @media (min-width: 1024px) { .pmu-nav-logo { width: 78px; height: 78px; } }
 
   .bg-glow {
     background:
@@ -104,16 +134,6 @@
   .card-hover { transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .4s ease; }
   .card-hover:hover { transform: translateY(-6px); border-color: rgba(245,130,14,.4); box-shadow: 0 16px 40px rgba(0,0,0,.45); }
 
-  .footer-pmu {
-    font-family: 'Playfair Display', 'EB Garamond', serif;
-    font-weight: 700;
-    font-style: normal;
-    font-size: 22px;
-    letter-spacing: 3px;
-    color: #f5820e;
-    margin-left: 130px;
-    text-transform: uppercase;
-  }
   .nav-link {
     position: relative;
     padding: .48rem .95rem;
@@ -130,13 +150,13 @@
 
   #siteHeader {
     background-image:
-      radial-gradient(ellipse 750px 600px at 8% 8%, rgba(245,130,14,0.42), transparent 62%),
-      radial-gradient(ellipse 850px 700px at 95% 12%, rgba(56,189,248,0.32), transparent 58%),
-      radial-gradient(ellipse 700px 600px at 12% 48%, rgba(56,189,248,0.28), transparent 58%),
-      radial-gradient(ellipse 800px 700px at 92% 55%, rgba(251,191,36,0.3), transparent 58%),
-      radial-gradient(ellipse 850px 700px at 18% 92%, rgba(245,130,14,0.34), transparent 58%),
-      radial-gradient(ellipse 800px 650px at 98% 96%, rgba(56,189,248,0.28), transparent 58%),
-      linear-gradient(180deg, rgba(5,9,20,0.6) 0%, rgba(10,18,48,0.78) 100%),
+      radial-gradient(ellipse 750px 600px at 8% 8%, rgba(245,130,14,0.5), transparent 62%),
+      radial-gradient(ellipse 850px 700px at 95% 12%, rgba(56,189,248,0.4), transparent 58%),
+      radial-gradient(ellipse 700px 600px at 12% 48%, rgba(56,189,248,0.36), transparent 58%),
+      radial-gradient(ellipse 800px 700px at 92% 55%, rgba(251,191,36,0.38), transparent 58%),
+      radial-gradient(ellipse 850px 700px at 18% 92%, rgba(245,130,14,0.42), transparent 58%),
+      radial-gradient(ellipse 800px 650px at 98% 96%, rgba(56,189,248,0.36), transparent 58%),
+      linear-gradient(180deg, rgba(5,9,20,0.22) 0%, rgba(10,18,48,0.38) 100%),
       url('images/fix background.jpeg');
     background-size: auto, auto, auto, auto, auto, auto, auto, cover;
     background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, center;
@@ -148,14 +168,14 @@
   }
   #siteHeader.scrolled {
     background-image:
-      linear-gradient(180deg, rgba(5,9,20,.32), rgba(5,9,20,.32)),
-      radial-gradient(ellipse 750px 600px at 8% 8%, rgba(245,130,14,0.42), transparent 62%),
-      radial-gradient(ellipse 850px 700px at 95% 12%, rgba(56,189,248,0.32), transparent 58%),
-      radial-gradient(ellipse 700px 600px at 12% 48%, rgba(56,189,248,0.28), transparent 58%),
-      radial-gradient(ellipse 800px 700px at 92% 55%, rgba(251,191,36,0.3), transparent 58%),
-      radial-gradient(ellipse 850px 700px at 18% 92%, rgba(245,130,14,0.34), transparent 58%),
-      radial-gradient(ellipse 800px 650px at 98% 96%, rgba(56,189,248,0.28), transparent 58%),
-      linear-gradient(180deg, rgba(5,9,20,0.6) 0%, rgba(10,18,48,0.78) 100%),
+      linear-gradient(180deg, rgba(5,9,20,.10), rgba(5,9,20,.10)),
+      radial-gradient(ellipse 750px 600px at 8% 8%, rgba(245,130,14,0.5), transparent 62%),
+      radial-gradient(ellipse 850px 700px at 95% 12%, rgba(56,189,248,0.4), transparent 58%),
+      radial-gradient(ellipse 700px 600px at 12% 48%, rgba(56,189,248,0.36), transparent 58%),
+      radial-gradient(ellipse 800px 700px at 92% 55%, rgba(251,191,36,0.38), transparent 58%),
+      radial-gradient(ellipse 850px 700px at 18% 92%, rgba(245,130,14,0.42), transparent 58%),
+      radial-gradient(ellipse 800px 650px at 98% 96%, rgba(56,189,248,0.36), transparent 58%),
+      linear-gradient(180deg, rgba(5,9,20,0.22) 0%, rgba(10,18,48,0.38) 100%),
       url('images/fix background.jpeg');
     background-size: auto, auto, auto, auto, auto, auto, auto, auto, cover;
     background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, center;
@@ -184,17 +204,56 @@
   .reveal-d3 { transition-delay: .24s; } .reveal-d4 { transition-delay: .32s; }
   .reveal-d5 { transition-delay: .4s; } .reveal-d6 { transition-delay: .48s; }
 
+  /* Featured partnership */
+  .partner-banner {
+    background-image:
+      linear-gradient(180deg, rgba(5,9,20,.45) 0%, rgba(5,9,20,.8) 62%, rgba(6,10,24,.95) 100%),
+      url('images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+
+  /* Display type is never justified — at 28px bold the forced word-spacing
+     opens rivers. `pretty` lets each line run its full width (unlike
+     `balance`, which deliberately shortens them all to match) and only
+     steps in to stop the last line ending up an orphan. */
+  .partner-headline {
+    text-align: left;
+    text-wrap: pretty;
+  }
+
+  /* ---- Professional justified body copy (matches people.html) ---- */
+  .partner-prose p {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+  }
+
+  /* headline acts as the disclosure toggle */
+  .partner-details summary::-webkit-details-marker { display: none; }
+  .partner-details summary { transition: background-color .25s ease; }
+  .partner-details summary:hover { background-color: rgba(255,255,255,.03); }
+  .partner-details summary:hover h2 { color: #fff; }
+  .partner-details summary:focus-visible { outline: 2px solid rgba(245,130,14,.6); outline-offset: -2px; }
+  .partner-details[open] > *:not(summary) { animation: partnerReveal .45s ease both; }
+  @keyframes partnerReveal {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .partner-link {
+    color: #38bdf8;
+    text-decoration: underline;
+    text-decoration-color: rgba(56,189,248,.45);
+    text-underline-offset: 3px;
+    transition: color .2s ease, text-decoration-color .2s ease;
+  }
+  .partner-link:hover { color: #7dd3fc; text-decoration-color: #7dd3fc; }
+
   .btn-pop { transition: transform .25s ease, box-shadow .25s ease; }
   .btn-pop:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 28px rgba(245,130,14,0.35); }
-
-  .marquee-wrap {
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
-  }
-  .marquee-track { display: flex; gap: 1.5rem; width: max-content; animation: marquee 24s linear infinite; }
-  .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
-  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   .partners-bg {
     background-image: linear-gradient(180deg, rgba(5,9,20,0.55) 0%, rgba(10,18,48,0.72) 55%, #0a1230 100%), url('images/background.jpg');
@@ -224,7 +283,7 @@
 
 <!-- ============ NAVBAR ============ -->
 <header id="siteHeader" class="fixed top-0 inset-x-0 z-50 border-b border-white/5">
-  <div class="w-full pl-0 pr-3 lg:pr-6">
+  <div class="w-full pl-0 pr-3 sm:pr-0">
     <div class="flex items-center justify-between h-[70px] lg:h-[86px]">
       <a href="index.html" class="flex items-center gap-3 shrink-0">
         <div class="logo-wrap relative w-16 h-16 lg:w-[78px] lg:h-[78px] shrink-0">
@@ -246,14 +305,24 @@
           <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </button>
         <div class="absolute left-0 top-full mt-3 w-48 rounded-lg card shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
-          <a href="about.html" class="block px-4 py-2 text-sm hover:text-brand-orange">Research Tracks</a>
-          <a href="index.html#research" class="block px-4 py-2 text-sm hover:text-brand-orange">Focus Areas</a>
-          <a href="people.html" class="block px-4 py-2 text-sm hover:text-brand-orange">Track Leaders</a>
+          <a href="about.html#tracks" class="block px-4 py-2 text-sm hover:text-brand-orange">Research Tracks</a>
+          <a href="index.html#research" class="block px-4 py-2 text-sm hover:text-brand-orange">Projects</a>
+          <a href="index.html#research" class="block px-4 py-2 text-sm hover:text-brand-orange">Publications</a>
         </div>
       </div>
-      <a href="people.html" class="nav-link">People</a>
-      <a href="news.html" class="nav-link">News &amp; Events</a>
+      <div class="relative group before:content-[''] before:absolute before:left-0 before:top-full before:w-52 before:h-3">
+        <button class="nav-link flex items-center gap-1">People
+          <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="absolute left-0 top-full mt-3 w-52 rounded-lg card shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+          <a href="people.html#our" class="block px-4 py-2 text-sm hover:text-brand-orange">Leadership</a>
+          <a href="people.html#senior" class="block px-4 py-2 text-sm hover:text-brand-orange">Senior Affiliates</a>
+          <a href="people.html#junior" class="block px-4 py-2 text-sm hover:text-brand-orange">Junior Affiliates</a>
+          <a href="people.html#external" class="block px-4 py-2 text-sm hover:text-brand-orange">External Affiliates</a>
+        </div>
+      </div>
       <a href="collaborations.html" class="nav-link active">Collaborations</a>
+      <a href="news.html" class="nav-link">News &amp; Events</a>
       <a href="contact.html" class="nav-link">Contact</a>
       </nav>
 
@@ -276,6 +345,15 @@
       <button id="menuBtn" class="text-white">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
+      <a href="https://www.pmu.edu.sa" target="_blank" rel="noopener noreferrer"
+         aria-label="Prince Mohammad Bin Fahd University"
+         title="Prince Mohammad Bin Fahd University"
+         class="hidden sm:flex items-center shrink-0 hover:scale-105 transition">
+        <span class="pmu-nav-logo ring-2 ring-brand-orange/70">
+          <img src="images/pmu logo.jpeg" alt="Prince Mohammad Bin Fahd University"
+               onerror="this.closest('a').style.display='none';" />
+        </span>
+      </a>
     </div>
     </div>
 
@@ -285,10 +363,10 @@
   <div id="mobileMenu" class="hidden bg-navy-900 border-t border-white/5 px-5 py-4 space-y-3 text-sm">
     <a href="index.html#home" class="block py-1">Home</a>
     <a href="about.html" class="block py-1">About</a>
-    <a href="index.html#research" class="block py-1">Research</a>
+    <a href="about.html#tracks" class="block py-1">Research</a>
     <a href="people.html" class="block py-1">People</a>
-    <a href="news.html" class="block py-1">News &amp; Events</a>
     <a href="collaborations.html" class="block py-1 text-brand-orange">Collaborations</a>
+    <a href="news.html" class="block py-1">News &amp; Events</a>
     <a href="contact.html" class="block py-1">Contact</a>
   </div>
 </header>
@@ -298,62 +376,101 @@
   <div class="max-w-7xl mx-auto text-center relative z-10">
     <p class="text-brand-orange font-semibold tracking-wide text-base sm:text-lg mb-2 reveal in-view">PARTNERS</p>
     <h1 class="font-serif text-3xl sm:text-4xl text-white font-bold mb-5 reveal in-view">Our Collaborations</h1>
-    <p class="text-slate-300 leading-relaxed max-w-2xl mx-auto mb-14 reveal in-view reveal-d1">
+    <p class="text-slate-300 leading-relaxed max-w-2xl mx-auto reveal in-view reveal-d1">
       We partner with universities, industry leaders, and research institutions to advance cognitive
       intelligence and AI systems that create real-world impact.
     </p>
-    <div class="marquee-wrap reveal">
-      <div class="marquee-track">
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3">
-          <img src="images/dean-ashraf.png" alt="Dr. Muhammad Waqar Ashraf" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Muhammad Waqar Ashraf</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3">
-          <img src="images/leader-1.jpg" alt="Dr. Arifi Noman Mohammed Waked" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Arifi Noman Mohammed Waked</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3">
-          <img src="images/leader-2.jpg" alt="Dr. Jose P. Cerin" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Jose P. Cerin</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3">
-          <img src="images/leader-3.jpg" alt="Dr. Alia Amir" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Alia Amir</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3">
-          <img src="images/leader-4.jpg" alt="Dr. Najma Saleem" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Najma Saleem</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3">
-          <img src="images/leader-5.jpg" alt="Dr. Edyta Wolny-Ibrahim" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Edyta Wolny-Ibrahim</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3" aria-hidden="true">
-          <img src="images/dean-ashraf.png" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Muhammad Waqar Ashraf</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3" aria-hidden="true">
-          <img src="images/leader-1.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Arifi Noman Mohammed Waked</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3" aria-hidden="true">
-          <img src="images/leader-2.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Jose P. Cerin</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3" aria-hidden="true">
-          <img src="images/leader-3.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Alia Amir</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3" aria-hidden="true">
-          <img src="images/leader-4.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-blue/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Najma Saleem</p>
-        </div>
-        <div class="card card-hover rounded-xl h-32 w-48 shrink-0 flex flex-col items-center justify-center gap-2 px-3" aria-hidden="true">
-          <img src="images/leader-5.jpg" alt="" class="w-14 h-14 rounded-full object-cover ring-2 ring-brand-orange/50" onerror="this.style.display='none'" />
-          <p class="text-slate-300 text-xs font-medium text-center leading-tight">Dr. Edyta Wolny-Ibrahim</p>
+  </div>
+</section>
+
+<!-- ============ FEATURED PARTNERSHIP ============ -->
+<section class="px-5 lg:px-8 pb-24 pt-6">
+  <div class="max-w-6xl mx-auto">
+    <article class="card card-hover rounded-[30px] overflow-hidden reveal">
+
+      <!-- banner: the two institutions, paired.
+           Background lives in CSS, not an <img>, because `.card img` forces
+           position:relative and would drop the artwork into the flow. -->
+      <div class="partner-banner flex flex-col items-center justify-center gap-5 px-5 py-10 text-center">
+        <p class="text-brand-orange font-semibold text-[11px] sm:text-xs" style="letter-spacing: 3px;">FEATURED PARTNERSHIP</p>
+
+        <div class="flex items-center gap-3 sm:gap-6">
+          <div class="rounded-2xl bg-white/[0.07] border border-white/15 px-4 sm:px-6 py-3 backdrop-blur-sm">
+            <p class="font-serif text-xl sm:text-2xl text-brand-orange font-bold leading-none">PMU</p>
+            <p class="text-slate-300 text-[10px] sm:text-[11px] mt-1.5">Saudi Arabia</p>
+          </div>
+
+          <svg class="w-7 h-7 sm:w-9 sm:h-9 text-brand-blue shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10m0 0l-3-3m3 3l-3 3M17 16H7m0 0l3-3m-3 3l3 3"/>
+          </svg>
+
+          <a href="https://en.snu.ac.kr/" target="_blank" rel="noopener noreferrer"
+             title="Seoul National University"
+             class="rounded-2xl bg-white/[0.07] border border-white/15 hover:border-brand-blue/60 px-4 sm:px-6 py-3 backdrop-blur-sm transition">
+            <p class="font-serif text-xl sm:text-2xl text-brand-blue font-bold leading-none">SNU</p>
+            <p class="text-slate-300 text-[10px] sm:text-[11px] mt-1.5">Republic of Korea</p>
+          </a>
         </div>
       </div>
-    </div>
+
+      <!-- body: headline is the toggle, the rest unfolds on click -->
+      <details class="partner-details group">
+        <summary class="block px-6 sm:px-10 py-6 sm:py-8 cursor-pointer list-none">
+          <!-- floated, not a flex sibling, so only line 1 yields room to it -->
+          <span class="float-right ml-5 mt-1 w-9 h-9 rounded-full border border-brand-orange/50 text-brand-orange flex items-center justify-center transition-transform duration-300 group-open:rotate-180">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </span>
+          <h2 class="partner-headline font-serif text-xl sm:text-2xl lg:text-[28px] text-white font-bold leading-snug transition-colors">
+            Strategic Collaboration in Artificial Intelligence, Education, and Digital Innovation with
+            <span class="text-brand-orange">Seoul National University (SNU)</span>, Republic&nbsp;of&nbsp;Korea
+          </h2>
+          <p class="mt-3 text-slate-500 text-xs group-open:hidden clear-both">Read the full announcement</p>
+        </summary>
+
+      <div class="px-6 sm:px-10 pb-6 sm:pb-10">
+        <div class="partner-prose space-y-4 text-slate-400 text-sm leading-relaxed">
+          <p>
+            The Center for Cognitive Intelligence and AI Systems (CIAS) at Prince Mohammad Bin Fahd University (PMU)
+            has established a strategic collaboration with the Center for Humanities and Information and AI Media
+            Contents Office at
+            <a href="https://en.snu.ac.kr/" target="_blank" rel="noopener noreferrer" class="partner-link">Seoul National University (SNU)</a>,
+            Republic of Korea. This partnership aims to advance
+            academic excellence, human development, and lifelong learning through interdisciplinary collaboration in
+            artificial intelligence, education, and digital innovation.
+          </p>
+          <p>
+            The collaboration focuses on key areas including AI-driven pedagogical innovation, personalized learning
+            systems, contextualized learning approaches, transformative education, leadership development, and global
+            knowledge exchange. Through joint research, academic initiatives, and professional development activities,
+            both institutions aim to explore innovative approaches that integrate artificial intelligence with
+            human-centered education and problem-solving.
+          </p>
+          <p>
+            This partnership also supports research and knowledge exchange on the intersection of technology, culture,
+            and education, including studies related to digital humanities, AI applications, and the broader impact of
+            emerging technologies on society. Together, PMU and SNU are committed to fostering innovation, empowering
+            future-ready learners, and building a bridge between academic and technological advancements across Saudi
+            Arabia and Korea.
+          </p>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-white/10">
+          <p class="text-brand-orange text-[11px] font-bold uppercase mb-3.5" style="letter-spacing: 2px;">Focus Areas</p>
+          <div class="flex flex-wrap gap-2.5">
+            <span class="text-xs text-slate-300 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">AI-Driven Pedagogical Innovation</span>
+            <span class="text-xs text-slate-300 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">Personalized Learning Systems</span>
+            <span class="text-xs text-slate-300 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">Contextualized Learning</span>
+            <span class="text-xs text-slate-300 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">Transformative Education</span>
+            <span class="text-xs text-slate-300 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">Leadership Development</span>
+            <span class="text-xs text-slate-300 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">Global Knowledge Exchange</span>
+          </div>
+        </div>
+      </div>
+      </details>
+
+    </article>
   </div>
 </section>
 
@@ -382,60 +499,59 @@
           <h4 class="text-white font-serif font-semibold mb-4 pb-2 border-b-2 border-brand-orange inline-block">Explore</h4>
           <ul class="space-y-2.5 text-sm text-slate-400">
             <li><a href="index.html#home" class="hover:text-brand-orange transition">Home</a></li>
-            <li><a href="about.html" class="hover:text-brand-orange transition">About CIAS</a></li>
-            <li><a href="news.html" class="hover:text-brand-orange transition">News &amp; Events</a></li>
-            <li><a href="collaborations.html" class="hover:text-brand-orange transition">Collaborations</a></li>
+            <li><a href="about.html#who-we-are" class="hover:text-brand-orange transition">Who We Are</a></li>
+            <li><a href="about.html#mission-vision" class="hover:text-brand-orange transition">Mission, Vision &amp; Values</a></li>
+            <li><a href="about.html#aims" class="hover:text-brand-orange transition">Our Aims</a></li>
           </ul>
         </div>
         <div>
           <h4 class="text-white font-serif font-semibold mb-4 pb-2 border-b-2 border-brand-orange inline-block">Research</h4>
           <ul class="space-y-2.5 text-sm text-slate-400">
-            <li><a href="about.html" class="hover:text-brand-orange transition">Research Tracks</a></li>
-            <li><a href="index.html#research" class="hover:text-brand-orange transition">Focus Areas</a></li>
-            <li><a href="people.html" class="hover:text-brand-orange transition">Track Leaders</a></li>
-            <li><a href="about.html" class="hover:text-brand-orange transition">Our Aims</a></li>
+            <li><a href="about.html#tracks" class="hover:text-brand-orange transition">Research Tracks</a></li>
+            <li><a href="index.html#research" class="hover:text-brand-orange transition">Projects</a></li>
+            <li><a href="index.html#research" class="hover:text-brand-orange transition">Publications</a></li>
           </ul>
         </div>
         <div>
           <h4 class="text-white font-serif font-semibold mb-4 pb-2 border-b-2 border-brand-orange inline-block">People</h4>
           <ul class="space-y-2.5 text-sm text-slate-400">
-            <li><a href="people.html" class="hover:text-brand-orange transition">Leadership</a></li>
-            <li><a href="people.html" class="hover:text-brand-orange transition">Senior Affiliates</a></li>
-            <li><a href="people.html" class="hover:text-brand-orange transition">Junior Affiliates</a></li>
-            <li><a href="people.html" class="hover:text-brand-orange transition">External Affiliates</a></li>
+            <li><a href="people.html#our" class="hover:text-brand-orange transition">Leadership</a></li>
+            <li><a href="people.html#senior" class="hover:text-brand-orange transition">Senior Affiliates</a></li>
+            <li><a href="people.html#junior" class="hover:text-brand-orange transition">Junior Affiliates</a></li>
+            <li><a href="people.html#external" class="hover:text-brand-orange transition">External Affiliates</a></li>
           </ul>
         </div>
         <div>
           <h4 class="text-white font-serif font-semibold mb-4 pb-2 border-b-2 border-brand-orange inline-block">Get in Touch</h4>
           <ul class="space-y-2.5 text-sm text-slate-400">
             <li><a href="contact.html" class="hover:text-brand-orange transition">Contact Us</a></li>
-            <li><a href="collaborations.html" class="hover:text-brand-orange transition">Our Partners</a></li>
-            <li><a href="people.html" class="hover:text-brand-orange transition">Our People</a></li>
+            <li><a href="collaborations.html" class="hover:text-brand-orange transition">Our Collaborations</a></li>
+            <li><a href="news.html" class="hover:text-brand-orange transition">News &amp; Events</a></li>
           </ul>
         </div>
       </div>
     </div>
 
     <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-5 pt-6">
-      <div class="flex items-center gap-6">
-      <div class="flex gap-3">
-        <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 3h-2a4 4 0 00-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-        </a>
-        <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M7 10v7M7 7v.01M11 17v-4.5c0-1.5 1-2.5 2.5-2.5S16 11 16 12.5V17M11 12.5V17"/></svg>
-        </a>
-        <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10.3 9.6l5 2.4-5 2.4V9.6z" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
-        </a>
-        <a href="#" aria-label="Twitter/X" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l16 16M20 4L4 20"/></svg>
-        </a>
-      </div>
-      <span class="footer-pmu">PMU</span>
+      <div class="flex items-center gap-5 sm:flex-1 sm:justify-between sm:pr-28">
+        <div class="flex gap-3">
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 3h-2a4 4 0 00-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M7 10v7M7 7v.01M11 17v-4.5c0-1.5 1-2.5 2.5-2.5S16 11 16 12.5V17M11 12.5V17"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10.3 9.6l5 2.4-5 2.4V9.6z" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter/X" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-brand-orange hover:border-brand-orange/60 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l16 16M20 4L4 20"/></svg>
+          </a>
+        </div>
+        <span class="pmu-wordmark">PMU</span>
       </div>
       <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-4 text-xs text-slate-500 text-center">
         <p>&copy; 2026 Center for Cognitive Intelligence and AI Systems. All rights reserved.</p>
